@@ -1,0 +1,71 @@
+/* General */
+
+body {
+	font-size: 100%; /* Set baseline font size to 16px */
+}
+
+h1, h2 {
+	color: #333;
+	text-transform: uppercase;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+h2 {
+	font-size: 1.5em;
+}
+
+/* Header */
+
+header {
+	margin-top: 36px;
+}
+
+/* Poster */
+
+textarea#post-text {
+	font-size: 120%;
+	height: 72px;
+	resize: none;
+	width: 590px;
+}
+
+button#post-button {
+	bottom: 40px;
+	position: relative;
+}
+
+/* Filter */
+
+input#filter-text {
+	width: 590px;
+}
+
+/* Feed */
+
+div#feed {
+	margin-top: 18px;
+}
+
+div.message {
+	-moz-border-radius: 15px;
+	background-color: #ddffcc;
+	border-radius: 15px;
+	margin-bottom: 1.5em;
+	padding: 1.5em;
+}
+
+div.message-info {
+	float: right;
+}
+
+p.sender-name {
+	
+}
+
+/* Footer */
+footer {
+	margin-bottom: 36px;
+}
