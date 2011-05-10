@@ -1,10 +1,8 @@
-.bundle
-db/*.sqlite3*
-log/*.log
-*.log
-/tmp/
-doc/
-*.swp
-*~
-.project
+# Temporary, DE and system files
 .DS_Store
+*~
+.Trash*
+.Trash*/*
+.Trash*/**/*
+.directory
+
