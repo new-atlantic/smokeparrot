@@ -1,0 +1,7 @@
+# Temporary, DE and system files
+.DS_Store
+*~
+.Trash*
+.Trash*/*
+.Trash*/**/*
+.directory
