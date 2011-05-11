@@ -1,20 +1,32 @@
 /* General */
 
 body {
+	background-color: #B9DADA;
 	font-size: 100%; /* Set baseline font size to 16px */
 }
 
 h1, h2 {
 	color: #333;
-	text-transform: uppercase;
 }
 
 h1 {
 	font-size: 2em;
+	text-transform: uppercase;
 }
 
 h2 {
 	font-size: 1.5em;
+	text-transform: lowercase;
+	margin-bottom: 0.5em;
+}
+
+.box {
+	background-color: #eadddd;
+}
+
+/* Container */
+div.container {
+	background-color: #E6F0F2;
 }
 
 /* Header */
@@ -26,10 +38,12 @@ header {
 /* Poster */
 
 textarea#post-text {
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 	font-size: 120%;
 	height: 72px;
 	resize: none;
-	width: 590px;
+	width: 510px;
 }
 
 button#post-button {
@@ -40,7 +54,9 @@ button#post-button {
 /* Filter */
 
 input#filter-text {
-	width: 590px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	width: 510px;
 }
 
 /* Feed */
@@ -51,14 +67,25 @@ div#feed {
 
 div.message {
 	-moz-border-radius: 15px;
-	background-color: #ddffcc;
+	background-color: #fff;
+	border: 2px solid #77B8BA;
 	border-radius: 15px;
 	margin-bottom: 1.5em;
 	padding: 1.5em;
+	word-wrap: break-word;
+}
+
+div.message.own {
+	border: 2px solid #DD8352;
 }
 
 div.message-info {
 	float: right;
+}
+
+img.message-icon {
+	height: 24px;
+	vertical-align: middle;
 }
 
 p.sender-name {

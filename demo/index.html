@@ -6,20 +6,65 @@
   <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->    
-  <link rel="stylesheet" href="css/blueprint/screen.css" />
+  <link rel="stylesheet" href="css/blueprint/screen.css">
   <!--[if lt IE 8]><link rel="stylesheet" href="blueprint/ie" /><![endif]-->
-  <link rel="stylesheet" href="css/custom.css" />
+  <link rel="stylesheet" href="css/custom.css">
+  <script type="text/javascript" src="js/jquery-1.6.min.js"></script>
+  
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function() {
+      $("#post-text").keyup(function() {
+        if ($(this).val() != "") {
+          $("#post-button").attr("disabled", false);
+        } else {
+          $("#post-button").attr("disabled", true);
+        }        
+      });
+      
+      $("#post-button").click(function() {
+        var message = '\
+          <div class="own message">\
+            <div class="message-info">\
+              <img src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked 0 times" /> 0\
+              &nbsp;&nbsp;\
+              <img src="img/circles_source.png" class="message-icon" title="This is your node" />\
+            </div>\
+            <p class="sender-name quiet">OwnNode</p>\
+            <hr />\
+            <p class="content">' + $("#post-text").val() + '</p>\
+          </div>';
+        
+        $(message)
+          .prependTo($("#messages"))
+          .hide()
+          .fadeIn("slow");
+        $("#post-text").val("");
+        $("#post-button").attr("disabled", true);
+        return false;
+      });
+      
+      $("#filter-button").click(function() {
+        if (true) {};$('<div class="message">' + $("#post-text").val() + '</div>')
+          .prependTo($("#messages"))
+          .hide()
+          .fadeIn("slow");
+        $("#post-text").val("");
+        $("#post-button").attr("disabled", true);
+        return false;
+      });
+    });
+  </script>
 </head>
 <body>
   <div class="container">
-    <header class="span-24 last">
-      <h1>Smoke Parrot</h1>
+    <header class="span-22 prepend-1 append-1 last">
+      <h1>Smokeparrot</h1>
     </header>
-    <section id="main" class="span-17 colborder">
+    <section id="main" class="span-15 prepend-1 colborder">
       <div id="poster">
         <form>
           <textarea id="post-text" placeholder="Insert your post here"></textarea>
-          <button id="post-button">Post</button>
+          <button id="post-button" disabled="true">Post</button>
         </form>
       </div>
       <div id="feed">
@@ -29,38 +74,49 @@
           <button id="filter-button">Filter</button>
         </div>
         <hr class="space" />
-        <div class="message">
-          <div class="message-info">
-            Resmoked 8 times | Proximity: Medium
+        <div id="messages">
+          <div class="message">
+            <div class="message-info">
+              <img src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked 8 times" /> 8
+              &nbsp;&nbsp;
+              <img src="img/circles_medium.png" class="message-icon" title="Node is at medium distance" />
+            </div>
+            <p class="sender-name quiet">FirstNode</p>
+            <hr />
+            <p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
           </div>
-          <p class="sender-name quiet">FirstNode</p>
-          <p class="content">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-        </div>
-        <div class="message">
-          <div class="message-info">
-            Resmoked 2 times | Proximity: Close
+          <div class="message">
+            <div class="message-info">
+              <img src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked 1 time" /> 1
+              &nbsp;&nbsp;
+              <img src="img/circles_close.png" class="message-icon" title="Node is at close distance" />
+            </div>
+            <p class="sender-name quiet">SecondNode</p>
+            <hr />
+            <p class="content">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
           </div>
-          <p class="sender-name quiet">SecondNode</p>
-          <p class="content">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          <div class="own message">
+            <div class="message-info">
+              <img src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked 0 times" /> 0
+              &nbsp;&nbsp;
+              <img src="img/circles_source.png" class="message-icon" title="This is your node" />
+            </div>
+            <p class="sender-name quiet">OwnNode</p>
+            <hr />
+            <p class="content">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
         </div>
       </div>
     </section>
-    <aside class="span-6 last">
-      <p class="box">
-        Own node name
-      </p>
-      <p class="box">
-        Most active nodes
-      </p>
-      <p class="box">
-        Closest nodes
-      </p>
+    <aside class="span-6 append-1 last">
+      <p><span class="quiet">My Node:</span><br />OwnNode</p>
+      <p><span class="quiet">Closest Nodes:</span><br />SecondNode</p>
       <p><a href="#">About Us</a></p>
       <p><a href="#">Help</a></p>
     </aside>
-    <footer class="quiet span-24 last">
+    <footer class="quiet span-22 prepend-1 append-1 last">
       <hr />
-      No parrots have been harmed in the production of this prototype.
+      <em>No parrots have been harmed in the production of this prototype.</em>
     </footer>
   </div>
 </body>
