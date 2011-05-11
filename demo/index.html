@@ -44,12 +44,21 @@
       });
       
       $("#filter-button").click(function() {
-        if (true) {};$('<div class="message">' + $("#post-text").val() + '</div>')
-          .prependTo($("#messages"))
-          .hide()
-          .fadeIn("slow");
-        $("#post-text").val("");
-        $("#post-button").attr("disabled", true);
+        $(this).attr("disabled", true);
+        if ($("#filter-text").val() != "") {
+          // Hide all messages
+          $(".message").fadeOut();
+          // Redisplay messages that contain filter text
+          $(".message:contains(" + $("#filter-text").val() + ")").fadeIn(function() {
+            $("#filter-button").attr("disabled", false);
+          });
+        } else {
+          // Show all messages
+          $(".message").fadeIn(function() {
+            $("#filter-button").attr("disabled", false);
+          });
+        }
+        
         return false;
       });
     });
