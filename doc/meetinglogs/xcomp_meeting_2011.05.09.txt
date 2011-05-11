@@ -1,0 +1,29 @@
+Send messages to connected devices
+
+Recieves messages from connected devices
+
+Store messages
+
+---------------------
+void newMessage(
+
+list retrieveMessages(
+
+void redistribute(
+
+void perserve(
+
+void hide(
+
+void blockSource(
+----------------------
+
+broadcast(message)
+
+Message properties
+	Message
+	Originator
+	resenders
+	Number of times received
+	Shortest Path
+	
