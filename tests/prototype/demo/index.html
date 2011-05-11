@@ -15,7 +15,7 @@
     $(document).ready(function() {
       $("#post-text").keyup(function() {
         if ($(this).val() != "") {
-          $("#post-button").attr("disabled", "");
+          $("#post-button").removeAttr("disabled");
         } else {
           $("#post-button").attr("disabled", "disabled");
         }        
@@ -44,19 +44,14 @@
       });
       
       $("#filter-button").click(function() {
-        $(this).attr("disabled", "disabled");
         if ($("#filter-text").val() != "") {
           // Hide all messages
           $(".message").fadeOut();
           // Redisplay messages that contain filter text
-          $(".message:contains(" + $("#filter-text").val() + ")").fadeIn(function() {
-            $("#filter-button").attr("disabled", "");
-          });
+          $(".message:contains(" + $("#filter-text").val() + ")").fadeIn();
         } else {
           // Show all messages
-          $(".message").fadeIn(function() {
-            $("#filter-button").attr("disabled", "");
-          });
+          $(".message").fadeIn();
         }
         
         return false;
