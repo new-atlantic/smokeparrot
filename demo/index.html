@@ -11,13 +11,13 @@
   <link rel="stylesheet" href="css/custom.css">
   <script type="text/javascript" src="js/jquery-1.6.min.js"></script>
   
-  <script type="text/javascript" charset="utf-8">
+  <script type="text/javascript">
     $(document).ready(function() {
       $("#post-text").keyup(function() {
         if ($(this).val() != "") {
-          $("#post-button").attr("disabled", false);
+          $("#post-button").attr("disabled", "");
         } else {
-          $("#post-button").attr("disabled", true);
+          $("#post-button").attr("disabled", "disabled");
         }        
       });
       
@@ -39,23 +39,23 @@
           .hide()
           .fadeIn("slow");
         $("#post-text").val("");
-        $("#post-button").attr("disabled", true);
+        $("#post-button").attr("disabled", "disabled");
         return false;
       });
       
       $("#filter-button").click(function() {
-        $(this).attr("disabled", true);
+        $(this).attr("disabled", "disabled");
         if ($("#filter-text").val() != "") {
           // Hide all messages
           $(".message").fadeOut();
           // Redisplay messages that contain filter text
           $(".message:contains(" + $("#filter-text").val() + ")").fadeIn(function() {
-            $("#filter-button").attr("disabled", false);
+            $("#filter-button").attr("disabled", "");
           });
         } else {
           // Show all messages
           $(".message").fadeIn(function() {
-            $("#filter-button").attr("disabled", false);
+            $("#filter-button").attr("disabled", "");
           });
         }
         
