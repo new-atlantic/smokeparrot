@@ -5,7 +5,6 @@ struct SMessageQueue {
 	struct SMessage* data;
 };
 
-struct SMessageQueue SMessageQueue_create(unsigned int size);
 void SMessageQueue_reallocate(struct SMessageQueue& queue, unsigned int size);
 
 void  SMessageQueue_push(struct SMessageQueue& queue, const struct SMessage& data);
