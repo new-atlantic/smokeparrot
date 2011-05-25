@@ -17,6 +17,7 @@ extern "C" SP_API void SPCALLCONV createMessage(char* str, const unsigned int le
 		message.message[i] = str[i];
 	}
 	message[length-1] = '\0';
+	message.length = length;
 	getMessageID(message);
 	message.hops = 0;
 
