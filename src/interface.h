@@ -1,3 +1,8 @@
+//# Local system interface.
+//# To use the library only this file needs to be included
+// (though the files it includes need to be available).
+
+#include "SNode.h"
 #include "SMessage.h"
 #include "SMessageQueue.h"
 
@@ -10,9 +15,9 @@
 
 #define SPCALLCONV
 
-extern "C" SP_API void SPCALLCONV newMessage(char* message);
+extern "C" SP_API void SPCALLCONV createMessage(char* message, const unsigned int length);
 extern "C" SP_API struct SMessageQueue SPCALLCONV retrieveMessages();
-extern "C" SP_API void SPCALLCONV redistribute(<messageID>);
-extern "C" SP_API void SPCALLCONV perserve(<messageID>
-extern "C" SP_API void SPCALLCONV delete(<messageID>);
-extern "C" SP_API void SPCALLCONV blockSource(<source>);
+extern "C" SP_API void SPCALLCONV redistribute(TMessageIdentifier id);
+extern "C" SP_API void SPCALLCONV perserve(TMessageIdentifier id);
+extern "C" SP_API void SPCALLCONV delete(TMessageIdentifier id);
+extern "C" SP_API void SPCALLCONV blockSource(TNodeIdentifier id);
