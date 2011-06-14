@@ -6,13 +6,13 @@
 #include "SMessageQueue.h"
 
 //! Cleans up the message store (deletes old messages, etc.)
-void Store_cleanup();
+bool Store_cleanup();
 
 //! Adds a message to the message store
-void Store_push_message(const SMessage& message);
+bool Store_push_message(const SMessage& message);
 
 //! Flags a message so it isn't removed by cleanup
-void Store_save_message(TMessageIdentifier id);
+bool Store_save_message(TMessageIdentifier id);
 
 //! Removes a message from the store
 void Store_remove_message(TMessageIdentifier id);
@@ -26,5 +26,5 @@ void Store_distribute_message(TMessageIdentifier id);
 //! Adds source to blacklist and deletes all messages from source (as origin or immediate)
 void Store_blacklist(TNodeIdentifier id);
 
-//! Retrieves messages from store
+//! Retrieves messages from database
 struct SMessageQueue Store_read_messages();

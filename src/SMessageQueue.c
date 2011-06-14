@@ -43,7 +43,7 @@ struct SMessage SMessageQueue_pop(SMessageQueue& queue)
 		queue.size = queue.used = 0;
 
 	if (queue.used == 0) return struct SMessage;
-	return queue.data[--used];
+		return queue.data[--used];
 }
 
 struct SMessage SMessageQueue_get(SMessageQueue& queue, unsigned int index)
@@ -52,5 +52,5 @@ struct SMessage SMessageQueue_get(SMessageQueue& queue, unsigned int index)
 		queue.size = queue.used = 0;
 
 	if (queue.used <= index || queue.size <= index) return struct SMessage;
-	return queue.data[index];
+		return queue.data[index];
 }
