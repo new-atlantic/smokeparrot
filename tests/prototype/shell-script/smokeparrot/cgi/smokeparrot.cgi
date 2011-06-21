@@ -45,7 +45,7 @@ content-type: text/html
               &nbsp;&nbsp;
               <img src="img/circles_source.png" class="message-icon" title="This is your node" />
               <% else %>
-              <img src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked <% /bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE" %> times" /> <% /bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE" %>
+              <img src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked <% /bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME" %> times" /> <% /bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME" %>
               &nbsp;&nbsp;
               <% case $(/bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME") in %>
                 <% [1-3]) echo '<img src="img/circles_close.png" class="message-icon" title="Node is at close distance" />' ;; %>
