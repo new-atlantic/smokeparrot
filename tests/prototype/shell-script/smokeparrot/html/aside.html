@@ -1,5 +1,11 @@
     <div id="aside" class="span-6 append-1 last">
-      <p><span class="quiet">My Node:</span><br />OwnNode</p>
+      <% PREFIX="/smokeparrot" %>
+      <% POSTER=$(cat /smokeparrot/settings | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
+      <% if [ ! $POSTER == "" ];then %>
+      <p><span class="quiet"><% echo -n $POSTER %>'s Node:</span><br /><% $PREFIX/lib/GetAddress.sh %></p>
+      <% else %>
+      <p><span class="quiet">Own Node:</span><br /><% $PREFIX/lib/GetAddress.sh %></p>
+      <% fi %>
       <p><span class="quiet">Closest Nodes:</span><br />SecondNode</p>
       <p><a href="http://naapurisopu.fi/smokeparrot">About Us</a></p>
       <p><a href="#">Help</a></p>
