@@ -1,6 +1,5 @@
 #!/usr/bin/haserl
-content-type: text/html
-
+<% echo -en "content-type: text/html\r\n\r\n" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
 <% PREFIX="/smokeparrot" %>
