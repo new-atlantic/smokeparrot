@@ -59,7 +59,7 @@ content-type: text/html
             <p class="sender-name quiet"><% /bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME" %></p>
             <p class="timestamp quiet"><% /bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME" %></p>
             <hr />
-            <p class="content"><% /bin/sed -n '12,$p' "$MESSAGE_STORE$MESSAGE_NAME" %></p>
+            <p class="content"><% /bin/sed -n '12,$p' "$MESSAGE_STORE$MESSAGE_NAME" | awk '{ print $0 "<br>"}' %></p>
           </div><!-- .message -->
         <% done %>           
         </div>
