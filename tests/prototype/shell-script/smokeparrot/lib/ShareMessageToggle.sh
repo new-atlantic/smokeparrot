@@ -12,8 +12,8 @@ then
 else
 	if [ $(/bin/sed -n '5q4p' "$MESSAGE") == "SHARE" ]
 	then
-		/bin/sed -i 's/SHARE/NOSHARE/' "$MESSAGE"
+		/bin/sed -i '4s/SHARE/NOSHARE/' "$MESSAGE"
 	else
-		/bin/sed -i 's/NOSHARE/SHARE/' "$MESSAGE"
+		/bin/sed -i '4s/NOSHARE/SHARE/' "$MESSAGE"
 	fi
 fi
