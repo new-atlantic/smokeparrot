@@ -6,14 +6,14 @@ content-type: text/html
 <% PREFIX="/smokeparrot" %>
 <html>
   <head>
-    <%in "$PREFIX/html/meta.html" %>
+    <%in /smokeparrot/html/meta.html %>
   <script type="text/javascript">
-  <%in "$PREFIX/html/script.js" %>
+  <%in /smokeparrot/html/script.js %>
   </script>
   </head>
 <body>
   <div class="container">
-    <%in "$PREFIX/html/header.html" %>
+    <%in /smokeparrot/html/header.html %>
     <div id="main" class="span-15 prepend-1 colborder">
       <div id="poster">
         <form>
@@ -65,8 +65,8 @@ content-type: text/html
         </div>
       </div>
     </div><!-- #main -->
-    <%in "$PREFIX/html/aside.html" %>
-    <%in "$PREFIX/html/footer.html" %>
+    <%in /smokeparrot/html/aside.html %>
+    <%in /smokeparrot/html/footer.html %>
   </div>
 </body>
 </html>
