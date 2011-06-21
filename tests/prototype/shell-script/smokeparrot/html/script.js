@@ -7,8 +7,8 @@
         }        
       });
       
-      $(".debug").hide()
-      $("#post-button").click(function() {
+      $(".debug").hide();
+/*      $("#post-button").click(function() {
         var message = '\
           <div class="own message">\
             <div class="message-info">\
@@ -28,7 +28,7 @@
         $("#post-text").val("");
         $("#post-button").attr("disabled", "disabled");
         return false;
-      });
+      });*/
       
       $("#filter-button").click(function() {
         if ($("#filter-text").val() != "") {
