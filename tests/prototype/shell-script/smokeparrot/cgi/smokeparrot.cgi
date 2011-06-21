@@ -16,9 +16,9 @@ content-type: text/html
     <%in /smokeparrot/html/header.html %>
     <div id="main" class="span-15 prepend-1 colborder">
       <div id="poster">
-        <form>
-          <textarea id="post-text" placeholder="Insert your post here"></textarea>
-          <button id="post-button" disabled="disabled">Post</button>
+        <form action="/cgi-bin/smoke.cgi" method=POST>
+          <textarea name="message_body" id="post-text" placeholder="Insert your post here"></textarea>
+          <button type=submit id="post-button" disabled="disabled">Post</button>
         </form>
       </div>
       <div id="feed">
