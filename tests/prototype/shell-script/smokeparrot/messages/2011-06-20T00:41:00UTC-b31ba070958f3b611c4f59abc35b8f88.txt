@@ -9,7 +9,7 @@ OWN
 
 
 
-Anonymous own message. Message has been modified after creation, i.e. the hash if off. Multiple lines.
+Anonymous own message. Message has been modified after creation, i.e. the hash is off. Multiple lines.
 Second line.
 Third line.
 

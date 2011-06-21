@@ -9,7 +9,7 @@ RECEIVED 2
 
 
 
-Anonymous fake received message from fake address. Message has been modified after creation, i.e. the hash if off. Multiple lines.
+Anonymous fake received message from fake address. Message has been modified after creation, i.e. the hash is off. Multiple lines.
 Second line.
 Third line.
 

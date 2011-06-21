@@ -9,4 +9,4 @@ RECEIVED 1
 
 Other Node
 
-Fake message from other node with fake address. Message is written on one line. Message has been modified after creation, i.e. the hash if off.
+Fake message from other node with fake address. Message is written on one line. Message has been modified after creation, i.e. the hash is off.

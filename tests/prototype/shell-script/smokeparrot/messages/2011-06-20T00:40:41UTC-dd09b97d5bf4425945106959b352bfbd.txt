@@ -9,4 +9,4 @@ OWN
 
 Torsti
 
-Test message from own node. Text written on one line. Message has been modified after creation, i.e. the hash if off.
+Test message from own node. Text written on one line. Message has been modified after creation, i.e. the hash is off.
