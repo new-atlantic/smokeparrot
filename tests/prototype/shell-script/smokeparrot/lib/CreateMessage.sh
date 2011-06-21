@@ -25,6 +25,8 @@ echo $SHARE_STATUS >> $MESSAGE
 echo $OWNERSHIP >> $MESSAGE
 echo 0 >> $MESSAGE
 echo "" >> $MESSAGE
+echo "" >> $MESSAGE
+echo "" >> $MESSAGE
 echo $SENDER_NAME >> $MESSAGE
 echo "" >> $MESSAGE
 echo $MESSAGE_BODY >> $MESSAGE
