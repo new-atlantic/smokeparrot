@@ -1,0 +1,12 @@
+08:01:36:EC:BC:BA
+2011-06-20T01:26:41UTC
+87292b0ff982cd91c29c5f9f50320059
+SHARE
+RECEIVED 1
+9
+
+
+
+Other Node
+
+Fake message from other node with fake address. Message is written on one line. Message has been modified after creation, i.e. the hash if off.

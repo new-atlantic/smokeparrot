@@ -1,0 +1,16 @@
+08:00:27:EC:B2:B6
+2011-06-20T01:09:39UTC
+815d4b3079a4f84c13e37f700131e5bd
+SHARE
+RECEIVED 2
+3
+
+
+
+
+
+Anonymous fake received message from fake address. Message has been modified after creation, i.e. the hash if off. Multiple lines.
+Second line.
+Third line.
+
+Fifth line.
