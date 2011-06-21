@@ -29,7 +29,6 @@ content-type: text/html
         </div>
         <hr class="space" />
         <div id="messages">
-        <% PREFIX="/opt/smokeparrot" %>
         <% MESSAGE_STORE="$PREFIX/var/messages/" %>
         <% MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }' | sort -r) %>
         <% for MESSAGE in $MESSAGE_LIST; do %>
