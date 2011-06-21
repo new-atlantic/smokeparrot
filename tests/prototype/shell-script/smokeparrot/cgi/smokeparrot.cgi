@@ -29,7 +29,7 @@ content-type: text/html
         </div>
         <hr class="space" />
         <div id="messages">
-        <% MESSAGE_STORE="$PREFIX/var/messages/" %>
+        <% MESSAGE_STORE="$PREFIX/messages/" %>
         <% MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }' | sort -r) %>
         <% for MESSAGE in $MESSAGE_LIST; do %>
           <% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE") == "OWN" ]; %>
