@@ -25,7 +25,7 @@ for QUEUED_MESSAGE_NAME in $QUEUE_LIST; do
   done
   # If message does not exist in store.
   if [ $IN_STORE == 0 ]; then
-    TIMESTAMP=$(date -uIseconds)
+    TIMESTAMP=$(date +%s)
     MESSAGE_RECEIVED="$TIMESTAMP"
     HASH=$(/bin/sed -n '3p' "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME")
     NEW_NAME="$MESSAGE_RECEIVED-$HASH.txt"
