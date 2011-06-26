@@ -2,6 +2,7 @@
 <% MESSAGE_STORE="$PREFIX/messages/" %>
 <% MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }' | sort -r) %>
 <% for MESSAGE_NAME in $MESSAGE_LIST; do %>
+<%# Use different class for own messages. %>
 <% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE_NAME") == "OWN" ]; %>
 <% then %>
   <div class="own message">
@@ -9,6 +10,7 @@
   <div class="message">
 <% fi %>
     <div class="message-info">
+    <%# Use different symbols depending on sender, and distance to sender. %>
     <% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE_NAME") == "OWN" ]; %>
     <% then %>
       <img alt="Symbol for times resmoked." src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked 0 times"> 0

@@ -1,5 +1,6 @@
 #!/bin/sh
-# Collect messages for sending.
+# Collect shared messages.
+# TODO: This script should be adapted to be run in GetRemoteMessages before ProcessReceivedMessages.
 
 PREFIX="/smokeparrot"
 MESSAGE_STORE="$PREFIX/messages/"

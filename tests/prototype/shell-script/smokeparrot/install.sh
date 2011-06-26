@@ -1,6 +1,6 @@
 #!/bin/sh
 # Script to create the smokeparrot directory structure on the a remote device.
-# TODO: creating a smokeparrot-user, transfering ssh-keys and more.
+# TODO: creating a smokeparrot-user, copying the img, css & js, transfering ssh-keys and more.
 
 TARGET_DEVICE="$1"
 

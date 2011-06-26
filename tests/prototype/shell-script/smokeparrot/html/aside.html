@@ -1,5 +1,5 @@
 <div id="aside" class="span-6 append-1 last">
-<% PREFIX="/smokeparrot" %>
+<%# This should display information about the local node and its neighbours. %>
 <% POSTER=$(cat /smokeparrot/settings | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
 <% if [ ! $POSTER == "" ];then %>
 <p><span class="quiet"><% echo -n $POSTER %>'s Node:</span><br><% echo -n $($PREFIX/lib/GetAddress.sh) %></p>

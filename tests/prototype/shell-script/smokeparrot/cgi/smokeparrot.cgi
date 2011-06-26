@@ -1,4 +1,8 @@
 #!/usr/bin/haserl
+<%# The cgi-script that makes up the Smokeparrot WebUI %>
+<%# The script is split up to different files that are sourced into this main file. %>
+<%# The other parts are in the html/ subdirectory %>
+<%# Posting messages id done using this same script. %>
 <% if [ "$POST_message_body" ]; then %>
   <% POSTER=$(cat /smokeparrot/settings | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
   <% /smokeparrot/lib/CreateMessage.sh "$POST_message_body" "$POSTER" %>
@@ -6,6 +10,7 @@
 <% echo -en "content-type: text/html\r\n\r\n" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
+<%# The PREFIX is used in some of the sourced parts. %>
 <% PREFIX="/smokeparrot" %>
 <html>
 <head>
