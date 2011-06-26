@@ -27,7 +27,7 @@
     </div><!-- .message-info -->
     <p class="debug"><% echo -n $MESSAGE_NAME %></p>
     <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
-    <p class="timestamp quiet"><% echo -n $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
+    <p class="timestamp quiet">Originally sent on: <% date -D %s -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
     <hr>
     <p class="content"><% echo -n $(/bin/sed -n '12,$p' "$MESSAGE_STORE$MESSAGE_NAME" | awk '{ print $0 "<br>"}') %></p>
   </div><!-- .message -->
