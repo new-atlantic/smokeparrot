@@ -2,7 +2,9 @@
  Smokeparrot (testing version)
 ===============================
 
-This is a test version of the proximity based microblogging application **Smokeparrot**. It is written mainly in *shell* and deployed as a cgi-script using haserl_.
+This is a test version of the proximity based microblogging application **Smokeparrot**. It is written mainly in *shell* and deployed as a cgi-script using haserl_. It does **not** yet have full functionality. 
+
+     This test version is in **no way safe** to use outside a controlled environment. At the moment **javascript can be inserted** into messages and **will be executed by the browser**. The unfinished message-transfer is based on ssh access to remote devices. Some of these security holes will be addressed, but as this is only made for testing in controlled environments that is not certain.
 
 .. _haserl: http://haserl.sourceforge.net/
 
