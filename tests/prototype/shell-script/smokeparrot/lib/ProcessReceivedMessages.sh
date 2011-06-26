@@ -7,6 +7,8 @@ MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }' | sort -r)
 MESSAGE_QUEUE="$PREFIX/queue/"
 QUEUE_LIST=$(ls -l $MESSAGE_QUEUE | awk '{ print $9 }' | sort -r)
 
+# TODO Set up an option, to ignore messages older than the argument or a default in the SETTINGS-file.
+
 for QUEUED_MESSAGE_NAME in $QUEUE_LIST; do
   IN_STORE=0
   for MESSAGE_NAME in $MESSAGE_LIST; do
