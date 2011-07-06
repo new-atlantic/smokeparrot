@@ -1,7 +1,8 @@
 #!/bin/bash
 # Processes new received messages in the queue
 
-source ./env.sh
+PREFIX="/smokeparrot"
+MESSAGE_STORE="$PREFIX/messages/"
 
 MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }' | sort -r)
 MESSAGE_QUEUE="$PREFIX/queue/"

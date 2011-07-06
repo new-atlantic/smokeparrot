@@ -1,7 +1,8 @@
 #!/bin/sh
 # Gets the messages from all neighbours.
 
-source ./env.sh
+PREFIX="/smokeparrot"
+MESSAGE_STORE="$PREFIX/messages/"
 
 FUNCTIONS="$PREFIX/lib"
 

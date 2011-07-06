@@ -1,7 +1,8 @@
 #!/bin/sh
 # Transfers messages from other Smokeparrot nodes into the queue.
 
-source ./env.sh
+PREFIX="/smokeparrot"
+MESSAGE_STORE="$PREFIX/messages/"
 
 MESSAGE_QUEUE="$PREFIX/queue/"
 

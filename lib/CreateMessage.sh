@@ -1,7 +1,8 @@
 #!/bin/sh
 # Create a Smokeparrot message.
 
-source ./env.sh
+PREFIX="/smokeparrot"
+MESSAGE_STORE="$PREFIX/messages/"
 
 SENDER_ADDRESS=$($PREFIX/lib/GetAddress.sh)
 MESSAGE_BODY="$1"

@@ -1,7 +1,8 @@
 #!/bin/sh
 # Change the share status of a smokeparrot message.
 
-source ./env.sh
+PREFIX="/smokeparrot"
+MESSAGE_STORE="$PREFIX/messages/"
 
 MESSAGE_NAME=$1
 MESSAGE="$MESSAGE_STORE$MESSAGE_NAME"

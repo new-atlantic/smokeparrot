@@ -2,7 +2,8 @@
 # Collect shared messages.
 # TODO: This script should be adapted to be run in GetRemoteMessages before ProcessReceivedMessages.
 
-source ./env.sh
+PREFIX="/smokeparrot"
+MESSAGE_STORE="$PREFIX/messages/"
 
 MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }')
 SHARED_MESSAGE_LIST=""
