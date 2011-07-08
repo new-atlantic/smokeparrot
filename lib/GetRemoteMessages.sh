@@ -1,15 +1,21 @@
 #!/bin/sh
 # Gets the messages from all neighbours.
 
-PREFIX="/smokeparrot"
-MESSAGE_STORE="$PREFIX/messages/"
+SMOKEPARROT_PATH=/home/smokeparrot
+MESSAGE_STORE=$SMOKEPARROT_PATH/messages/
 
-FUNCTIONS="$PREFIX/lib"
+FUNCTIONS=$SMOKEPARROT_PATH/lib
 
-NEIGHBOURS="" # TODO: function/file to generate neighbour IP-addresses
+NEIGHBOURS="$($FUNCTIONS/GetNeighbours.sh)"
 
-for ADDRESS in $NEIGHBOURS; do
-  $FUNCTIONS/TransferMessages.sh "$ADDRESS"
-  #$FUNCTIONS/CollectMessages.sh
+for IP_ADDRESS in $NEIGHBOURS; do
+  $FUNCTIONS/TransferMessages.sh "$IP_ADDRESS"
+# DEBUG  ls $SMOKEPARROT_PATH/messages
+# DEBUG  ls $SMOKEPARROT_PATH/queue
+  $FUNCTIONS/KeepSharedMessages.sh
+# DEBUG  ls $SMOKEPARROT_PATH/messages
+# DEBUG  ls $SMOKEPARROT_PATH/queue
   $FUNCTIONS/ProcessReceivedMessages.sh
+# DEBUG  ls $SMOKEPARROT_PATH/messages
+# DEBUG  ls $SMOKEPARROT_PATH/queue
 done

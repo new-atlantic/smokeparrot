@@ -4,7 +4,7 @@
 
 Smokeparrot is a free proximity based micro-blogging application designed for community networks.
 
-    This is a test version of Smokeparrot. It is written mainly in *shell script* and deployed as a cgi-script using haserl_. It does **not** yet have full functionality. 
+This is a test version of Smokeparrot. It is written mainly in *shell script* and deployed as a cgi-script using haserl_. It does **not** yet have full functionality. 
 
      This test version is in **no way safe** to use outside a controlled environment. At the moment **javascript can be inserted** into messages and **will be executed by the browser**. The unfinished message-transfer is based on ssh access to remote devices. Some of these security holes will be addressed, but as this is only made for testing in controlled environments that is not certain.
 
@@ -16,6 +16,10 @@ Deployment
 This test version of Smokeparrot has been tested on the Linux-based wireless router firmware OpenWRT_. The test version of Smokeparrot is placed under the directory */smokeparrot/*, that is, outside the regular file system hierarchy used on OpenWRT. A symbolic link to */smokeparrot/cgi/smokeparrot.cgi* should be placed into /www/cgi-bin/. This version does not integrate with the LuCi web user interface on OpenWRT.
 
 .. _OpenWRT: http://www.openwrt.org/
+
+See INSTALL_ for
+
+.. _INSTALL: INSTALL specific instructions on how to test this prototype.
 
 Messages
 ========
@@ -37,6 +41,7 @@ Message header lines:
  6. The sixth line is a single integer that represents the shortest path from the original sender to the current node. Its initial value is 0 and it is incremented by one on a receiving node. When the same message is received again. The value of the sixth line (+ 1) is compared to that of the same message in the message store. The value of the sixth line of the originally received message is then set to the smaller of the two values. This way the sixth line always represents the shortest known (message) path to the original sender.
  7. Line seven is used for a mark for keeping the message so that it will not be deleted automatically after a certain time has passed.
  8. Lines 8 and 9 have not been defined yet, and are thus reserved for additions to the message header.
+ 9. See above.
  10. The tenth line is reserved for a user-defined name for the message sender.
  11. Line eleven is empty to separate the message body from the header.
  12. The twelfth line and all subsequent lines contain the message body.

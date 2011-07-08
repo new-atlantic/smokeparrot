@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 # Processes new received messages in the queue
 
-PREFIX="/smokeparrot"
-MESSAGE_STORE="$PREFIX/messages/"
+SMOKEPARROT_PATH=/home/smokeparrot
+MESSAGE_STORE=$SMOKEPARROT_PATH/messages/
 
 MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }' | sort -r)
-MESSAGE_QUEUE="$PREFIX/queue/"
+MESSAGE_QUEUE=$SMOKEPARROT_PATH/queue/
 QUEUE_LIST=$(ls -l $MESSAGE_QUEUE | awk '{ print $9 }' | sort -r)
 
 # TODO: Set up an option, to ignore messages older than the argument or a default in the SETTINGS-file.

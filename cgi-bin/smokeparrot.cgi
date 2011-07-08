@@ -3,11 +3,15 @@
 <%# %>
 <%# Posting messages is done using this same script. %>
 <%# Only invoke the message creation script if the POST-form has been used. %>
+<% SMOKEPARROT_PATH="/home/smokeparrot" %>
+<% /home/smokeparrot/lib/GetRemoteMessages.sh %>
 <% if [ "$POST_message_body" ]; then %>
-  <% POSTER=$(cat /smokeparrot/settings | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
-  <% /smokeparrot/lib/CreateMessage.sh "$POST_message_body" "$POSTER" %>
+  <% POSTER=$(cat "$SMOKEPARROT_PATH/settings" | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
+  <% $SMOKEPARROT_PATH/lib/CreateMessage.sh "$POST_message_body" "$POSTER" %>
 <% fi %>
-<% PREFIX="/smokeparrot" %>
+<% if [ "$POST_share_message" ]; then %>
+  <% $SMOKEPARROT_PATH/lib/ShareMessageToggle.sh "$POST_share_message" %>
+<% fi %>
 <% echo -en "content-type: text/html\r\n\r\n" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
@@ -49,7 +53,7 @@
   <body>
     <div class="container">
       <div id="header" class="span-22 prepend-1 append-1 last">
-	<h1>Smokeparrot</h1>
+       	<h1>Smokeparrot</h1>
       </div><!-- #header -->
       <div id="main" class="span-15 prepend-1 colborder">
 	<div id="poster">
@@ -70,60 +74,66 @@
 	  </div><!-- #filter -->
 	  <hr class="space">
 	  <div id="messages">
-	    <% MESSAGE_STORE="$PREFIX/messages/" %>
+	    <% MESSAGE_STORE="$SMOKEPARROT_PATH/messages/" %>
 	    <% MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }' | sort -r) %>
 	    <% for MESSAGE_NAME in $MESSAGE_LIST; do %>
 	    <%# Use different class for own messages. %>
 	    <% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE_NAME") == "OWN" ]; %>
 	    <% then %>
             <div class="own message">
-	      <% else %>
-              <div class="message">
-		<% fi %>
-		<div class="message-info">
-		  <%# Use different symbols depending on sender, and distance to sender. %>
-		  <% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE_NAME") == "OWN" ]; %>
-		  <% then %>
-		  <img alt="Symbol for times resmoked." src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked 0 times"> 0
-		  &nbsp;&nbsp;
-		  <img alt="Sent from this node." src="img/circles_source.png" class="message-icon" title="This is your node">
-		  <% else %>
-		  <img alt="Symbol for times resmoked." src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked <% /bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME" %> times"> <% echo -n $(/bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME") %>
-		  &nbsp;&nbsp;
-		  <% case $(/bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME") in %>
+	    <% else %>
+            <div class="message">
+	      <% fi %>
+	      <div class="message-info">
+		<%# Use different symbols depending on sender, and distance to sender. %>
+		<% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE_NAME") == "OWN" ]; %>
+		<% then %>
+		<img alt="Symbol for times resmoked." src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked 0 times"> 0
+		&nbsp;&nbsp;
+		<img alt="Sent from this node." src="img/circles_source.png" class="message-icon" title="This is your node">
+		<% else %>
+		<img alt="Symbol for times resmoked." src="img/loop_arrow_cool.png" class="message-icon" title="Resmoked <% /bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME" %> times"> <% echo -n $(/bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME") %>
+		&nbsp;&nbsp;
+		<% case $(/bin/sed -n '6p' "$MESSAGE_STORE$MESSAGE_NAME") in %>
 		  <% [1-3]) echo '<img alt="Close distance to original sender." src="img/circles_close.png" class="message-icon" title="Node is at close distance">' ;; %>
 		  <% [4-8]) echo '<img alt="Medium distance to original sender." src="img/circles_medium.png" class="message-icon" title="Node is at medium distance">'  ;; %>
 		  <% *) echo '<img alt="Greater distance to original sender." src="img/circles_far.png" class="message-icon" title="Node is further away">' ;; %>
 		  <% esac %>
-		  <br>
-		  <% fi %>
-		</div><!-- .message-info -->
-		<p class="debug"><% echo -n $MESSAGE_NAME %></p>
-		<p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
-		<p class="timestamp quiet">Originally sent on: <% date -D %s -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
-		<hr>
-		<p class="content"><% echo -n $(/bin/sed -n '12,$p' "$MESSAGE_STORE$MESSAGE_NAME" | awk '{ print $0 "<br>"}') %></p>
-	      </div><!-- .message -->
-	      <% done %>           
-	    </div><!-- #messages -->
-	  </div><!-- #feed -->
-	</div><!-- #main -->
-	<div id="aside" class="span-6 append-1 last">
-	  <%# This should display information about the local node and its neighbours. %>
-	  <% POSTER=$(cat /smokeparrot/settings | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
-	  <% if [ ! $POSTER == "" ];then %>
-	  <p><span class="quiet"><% echo -n $POSTER %>'s Node:</span><br><% echo -n $($PREFIX/lib/GetAddress.sh) %></p>
-	  <% else %>
-	  <p><span class="quiet">Own Node:</span><br><% echo -n $($PREFIX/lib/GetAddress.sh) %></p>
-	  <% fi %>
-	  <p><span class="quiet">Closest Nodes:</span><br>SecondNode</p>
-	  <p><a href="http://naapurisopu.fi/smokeparrot">About Us</a></p>
-	  <p><a href="#">Help</a></p>
-	</div><!-- #aside -->
-	<div id="footer" class="quiet span-22 prepend-1 append-1 last">
-	  <hr>
-	  <em>No parrots have been harmed in the production of this prototype.</em>
-	</div><!-- #footer -->
-      </div><!-- .container -->
+		<br>
+		<% fi %>
+	      </div><!-- .message-info -->
+	      <p class="debug"><% echo -n $MESSAGE_NAME %></p>
+	      <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
+	      <p class="timestamp quiet">Originally sent on: <% date -D %s -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
+	      <hr>
+	      <form action="/cgi-bin/smokeparrot.cgi" method=POST>
+		<div id="share-form">
+		  <p class="debug"><% echo -n "$POST_share_message" %></p>
+		  <input type="submit" name="share_message" value="<% echo -n $MESSAGE_NAME %>" >
+		</div><!-- #post-form -->
+	      </form>
+	      <p class="content"><% echo -n $(/bin/sed -n '12,$p' "$MESSAGE_STORE$MESSAGE_NAME" | awk '{ print $0 "<br>"}') %></p>
+	    </div><!-- .message -->
+	    <% done %>           
+	  </div><!-- #messages -->
+	</div><!-- #feed -->
+      </div><!-- #main -->
+      <div id="aside" class="span-6 append-1 last">
+	<%# This should display information about the local node and its neighbours. %>
+	<% POSTER=$(cat "$SMOKEPARROT_PATH/settings" | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
+	<% if [ ! $POSTER == "" ];then %>
+	<p><span class="quiet"><% echo -n $POSTER %>'s Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %></p>
+	<% else %>
+	<p><span class="quiet">Own Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %></p>
+	<% fi %>
+	<p><span class="quiet">Closest Nodes:</span><br>SecondNode</p>
+	<p><a href="http://naapurisopu.fi/smokeparrot">About Us</a></p>
+	<p><a href="#">Help</a></p>
+      </div><!-- #aside -->
+      <div id="footer" class="quiet span-22 prepend-1 append-1 last">
+	<hr>
+	<em>No parrots have been harmed in the production of this prototype.</em>
+      </div><!-- #footer -->
+    </div><!-- .container -->
   </body>
 </html>

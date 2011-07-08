@@ -1,11 +1,11 @@
 #!/bin/sh
 # Change the share status of a smokeparrot message.
 
-PREFIX="/smokeparrot"
-MESSAGE_STORE="$PREFIX/messages/"
+SMOKEPARROT_PATH=/home/smokeparrot
+MESSAGE_STORE=$SMOKEPARROT_PATH/messages/
 
 MESSAGE_NAME=$1
-MESSAGE="$MESSAGE_STORE$MESSAGE_NAME"
+MESSAGE=$MESSAGE_STORE$MESSAGE_NAME
 
 # Check that the message exists.
 if [ ! -f $MESSAGE ]
