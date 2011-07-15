@@ -6,8 +6,9 @@
 <% SMOKEPARROT_PATH="/home/smokeparrot" %>
 <% /home/smokeparrot/lib/GetRemoteMessages.sh > /dev/null 2>&1 %>
 <% if [ "$POST_message_body" ]; then %>
+  <% THEMESSAGE=$( echo "$POST_message_body" | /bin/sed -e 's/<[^>]*>//g') %>
   <% POSTER=$(cat "$SMOKEPARROT_PATH/settings" | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
-  <% $SMOKEPARROT_PATH/lib/CreateMessage.sh "$POST_message_body" "$POSTER" %>
+  <% $SMOKEPARROT_PATH/lib/CreateMessage.sh "$THEMESSAGE" "$POSTER" %>
 <% fi %>
 <% if [ "$POST_share_message" ]; then %>
   <% $SMOKEPARROT_PATH/lib/ShareMessageToggle.sh "$POST_share_message" %>
@@ -102,9 +103,7 @@
 		<br>
 		<% fi %>
 	      </div><!-- .message-info -->
-	      <p class="debug"><% echo -n $MESSAGE_NAME %></p>
-	      <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
-	      <p class="timestamp quiet">Originally sent on: <% date -D %s -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
+	      <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %> |  <% date -D %s +" %H:%M - %B %d" -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
 	      <hr>
 	      <form action="/cgi-bin/smokeparrot.cgi" method=POST>
 		<div id="share-form">
@@ -126,7 +125,7 @@
 	<% else %>
 	<p><span class="quiet">Own Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %></p>
 	<% fi %>
-	<p><span class="quiet">Closest Nodes:</span></p>
+	<p><span class="quiet">Neighbouring Nodes:</span></p>
 	<ul>
 	  <% for i in $($SMOKEPARROT_PATH/lib/GetNeighbours.sh); do %>
 	  <li><% echo $i %></li>
@@ -137,7 +136,8 @@
       </div><!-- #aside -->
       <div id="footer" class="quiet span-22 prepend-1 append-1 last">
 	<hr>
-	<em>No parrots have been harmed in the production of this prototype.</em>
+	<p> Smokeparrot is free software under the <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>. &copy;2011 Torsti Schulz. UI design by Martin Richter.</p>
+	<p><em>No parrots have been harmed in the production of this prototype.</em></p>
       </div><!-- #footer -->
     </div><!-- .container -->
   </body>
