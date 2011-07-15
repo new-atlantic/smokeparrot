@@ -4,7 +4,7 @@
 <%# Posting messages is done using this same script. %>
 <%# Only invoke the message creation script if the POST-form has been used. %>
 <% SMOKEPARROT_PATH="/home/smokeparrot" %>
-<% /home/smokeparrot/lib/GetRemoteMessages.sh %>
+<% /home/smokeparrot/lib/GetRemoteMessages.sh > /dev/null 2>&1 %>
 <% if [ "$POST_message_body" ]; then %>
   <% POSTER=$(cat "$SMOKEPARROT_PATH/settings" | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
   <% $SMOKEPARROT_PATH/lib/CreateMessage.sh "$POST_message_body" "$POSTER" %>
@@ -126,7 +126,12 @@
 	<% else %>
 	<p><span class="quiet">Own Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %></p>
 	<% fi %>
-	<p><span class="quiet">Closest Nodes:</span><br>SecondNode</p>
+	<p><span class="quiet">Closest Nodes:</span></p>
+	<ul>
+	  <% for i in $($SMOKEPARROT_PATH/lib/GetNeighbours.sh); do %>
+	  <li><% echo $i %></li>
+	  <% done %> 
+	</ul>
 	<p><a href="http://naapurisopu.fi/smokeparrot">About Us</a></p>
 	<p><a href="#">Help</a></p>
       </div><!-- #aside -->
