@@ -4,7 +4,7 @@
 SHARE
 OWN
 0
-
+VISIBLE
 
 
 Smokeparrot

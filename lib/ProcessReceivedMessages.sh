@@ -40,6 +40,7 @@ for QUEUED_MESSAGE_NAME in $QUEUE_LIST; do
     /bin/sed -i "6s/$DISTANCE/$(expr $DISTANCE + 1)/" "$MESSAGE_STORE$NEW_NAME"
     # Set times received to 1.
     /bin/sed -i "5s/.*/RECEIVED 1/" "$MESSAGE_STORE$NEW_NAME"
+    /bin/sed -i '4s/SHARE/NOSHARE/' "$MESSAGE_STORE$NEW_NAME"
   else
     /bin/rm "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME"
   fi

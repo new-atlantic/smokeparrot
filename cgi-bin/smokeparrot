@@ -6,12 +6,15 @@
 <% SMOKEPARROT_PATH="/home/smokeparrot" %>
 <% /home/smokeparrot/lib/GetRemoteMessages.sh > /dev/null 2>&1 %>
 <% if [ "$POST_message_body" ]; then %>
+  <% POSTER=$( echo "$POST_sender_name" | /bin/sed 's/[^A-Za-z0-9 ]//g') %>
   <% THEMESSAGE=$( echo "$POST_message_body" | /bin/sed -e 's/<[^>]*>//g') %>
-  <% POSTER=$(cat "$SMOKEPARROT_PATH/settings" | awk 'BEGIN { FS = ":" } /USER/ { print $2}') %>
   <% $SMOKEPARROT_PATH/lib/CreateMessage.sh "$THEMESSAGE" "$POSTER" %>
 <% fi %>
 <% if [ "$POST_share_message" ]; then %>
-  <% $SMOKEPARROT_PATH/lib/ShareMessageToggle.sh "$POST_share_message" %>
+  <% $SMOKEPARROT_PATH/lib/ShareMessageToggle.sh "$POST_share_message" /dev/null 2>&1 %>
+<% fi %>
+<% if [ "$POST_hide_message" ]; then %>
+  <% $SMOKEPARROT_PATH/lib/HideMessageToggle.sh "$POST_hide_message" /dev/null 2>&1 %>
 <% fi %>
 <% echo -en "content-type: text/html\r\n\r\n" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
@@ -54,14 +57,15 @@
   <body>
     <div class="container">
       <div id="header" class="span-22 prepend-1 append-1 last">
-       	<h1>Smokeparrot</h1>
+       	<h1><a href="/cgi-bin/smokeparrot">Smokeparrot</a></h1>
       </div><!-- #header -->
       <div id="main" class="span-15 prepend-1 colborder">
 	<div id="poster">
-	  <form action="/cgi-bin/smokeparrot.cgi" method=POST>
+	  <form action="/cgi-bin/smokeparrot" method="POST">
 	    <div id="post-form">
 	      <textarea name="message_body" id="post-text" placeholder="Insert your post here"></textarea>
 	      <%# The post button is disabled while the textarea is empty. %>
+	      <input type="text" name="sender_name" id="sender-name" size="25" placeholder="Your name"></input>
 	      <button type=submit id="post-button" disabled="disabled">Post</button>
 	    </div><!-- #post-form -->
 	  </form>
@@ -79,12 +83,7 @@
 	    <% MESSAGE_LIST=$(ls -l $MESSAGE_STORE | awk '{ print $9 }' | sort -r) %>
 	    <% for MESSAGE_NAME in $MESSAGE_LIST; do %>
 	    <%# Use different class for own messages. %>
-	    <% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE_NAME") == "OWN" ]; %>
-	    <% then %>
-            <div class="own message">
-	    <% else %>
-            <div class="message">
-	      <% fi %>
+            <div class="<% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE_NAME") == "OWN" ]; then echo "own";fi %> message"<% if [ $(/bin/sed -n '7p' "$MESSAGE_STORE$MESSAGE_NAME") == "HIDDEN" ]; then echo ' style="display:none"';fi %>>
 	      <div class="message-info">
 		<%# Use different symbols depending on sender, and distance to sender. %>
 		<% if [ $(/bin/sed -n '5p' "$MESSAGE_STORE$MESSAGE_NAME") == "OWN" ]; %>
@@ -105,11 +104,17 @@
 	      </div><!-- .message-info -->
 	      <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %> |  <% date -D %s +" %H:%M - %B %d" -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
 	      <hr>
-	      <form action="/cgi-bin/smokeparrot.cgi" method=POST>
+	      <form action="/cgi-bin/smokeparrot" method="POST">
 		<div id="share-form">
-		  <p class="debug"><% echo -n "$POST_share_message" %></p>
-		  <input type="submit" name="share_message" value="<% echo -n $MESSAGE_NAME %>" >
-		</div><!-- #post-form -->
+		  <input type="hidden" name="share_message" value="<% echo -n $MESSAGE_NAME %>" >
+		  <button type=submit id="share-button"><% if [ $(/bin/sed -n '5q4p' "$MESSAGE_STORE$MESSAGE_NAME") == "SHARE" ]; then echo "Unshare"; else echo "Share"; fi %></button>
+		</div><!-- #share-form -->
+	      </form>
+	      <form action="/cgi-bin/smokeparrot" method="POST">
+		<div id="hide-form">
+		  <input type="hidden" name="hide_message" value="<% echo -n $MESSAGE_NAME %>" >
+		  <button type=submit id="share-button"><% if [ $(/bin/sed -n '8q7p' "$MESSAGE_STORE$MESSAGE_NAME") == "VISIBLE" ]; then echo "Hide message"; else echo "Make visible"; fi %></button>
+		</div><!-- #hide-form -->
 	      </form>
 	      <p class="content"><% echo -n $(/bin/sed -n '12,$p' "$MESSAGE_STORE$MESSAGE_NAME" | awk '{ print $0 "<br>"}') %></p>
 	    </div><!-- .message -->
@@ -132,11 +137,11 @@
 	  <% done %> 
 	</ul>
 	<p><a href="http://naapurisopu.fi/smokeparrot">About Us</a></p>
-	<p><a href="#">Help</a></p>
+	<p><a href="/cgi-bin/smokeparrot#">Help</a></p>
       </div><!-- #aside -->
       <div id="footer" class="quiet span-22 prepend-1 append-1 last">
 	<hr>
-	<p> Smokeparrot is free software under the <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>. &copy;2011 Torsti Schulz. UI design by Martin Richter.</p>
+	<p> Smokeparrot is free software under the <a href="http://www.gnu.org/licenses/gpl-3.0.html">GPLv3</a>. &copy;2011 Torsti Schulz, Martin Richter, Zach Laster.</p>
 	<p><em>No parrots have been harmed in the production of this prototype.</em></p>
       </div><!-- #footer -->
     </div><!-- .container -->

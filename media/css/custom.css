@@ -46,8 +46,13 @@ textarea#post-text {
 	width: 510px;
 }
 
+input#sender-name { 
+        -moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
 button#post-button {
-	bottom: 40px;
+	left: 270px;
 	position: relative;
 }
 

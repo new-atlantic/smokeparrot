@@ -1,5 +1,5 @@
 #!/bin/sh
-# Change the share status of a smokeparrot message.
+# Set hidden flag for a smokeparrot message.
 
 SMOKEPARROT_PATH=/home/smokeparrot
 MESSAGE_STORE=$SMOKEPARROT_PATH/messages/
@@ -13,13 +13,13 @@ if [ ! -f $MESSAGE ]
 then
 	echo "The message does not exist."
 else
-  # Change the sharing state.
-	if [ $(/bin/sed -n '5q4p' "$MESSAGE") == "SHARE" ]
+	if [ $(/bin/sed -n '8q7p' "$MESSAGE") == "VISIBLE" ]
 	then
+	        /bin/sed -i '7s/VISIBLE/HIDDEN/' "$MESSAGE"
 		/bin/sed -i '4s/SHARE/NOSHARE/' "$MESSAGE"
 		/bin/rm "$SHARE_QUEUE$MESSAGE_NAME"
 	else
-		/bin/sed -i '4s/NOSHARE/SHARE/' "$MESSAGE"
-		/bin/ln -s "$MESSAGE" "$SHARE_QUEUE$MESSAGE_NAME"
+	        /bin/sed -i '7s/HIDDEN/VISIBLE/' "$MESSAGE"
 	fi
+    # Hide and unshare message.
 fi
