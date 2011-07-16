@@ -16,6 +16,9 @@
 <% if [ "$POST_hide_message" ]; then %>
   <% $SMOKEPARROT_PATH/lib/HideMessageToggle.sh "$POST_hide_message" /dev/null 2>&1 %>
 <% fi %>
+<% if [ "$POST_star_message" ]; then %>
+  <% $SMOKEPARROT_PATH/lib/StarMessageToggle.sh "$POST_star_message" /dev/null 2>&1 %>
+<% fi %>
 <% echo -en "content-type: text/html\r\n\r\n" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
@@ -72,7 +75,7 @@
 	</div><!-- #poster -->
 	<div id="feed">
 	  <h2>Recently Smoked</h2>
-	  <%# A filter to search messages. Currently functionality is implemented with jQuery in ./script.js %>
+	  <%# A filter to search messages. Currently functionality is implemented with jQuery. %>
 	  <div id="filter">
 	    <input id="filter-text" type="text" class="text" placeholder="Insert your filter query here">
 	    <button id="filter-button">Filter</button>
@@ -102,6 +105,12 @@
 		<br>
 		<% fi %>
 	      </div><!-- .message-info -->
+	      <form action="/cgi-bin/smokeparrot" method="POST">
+		<div id="star-form" style="float:left;">
+		  <input type="hidden" name="star_message" value="<% echo -n $MESSAGE_NAME %>" >
+		  <input type=image id="share-button" <% if [ $(/bin/sed -n '9q8p' "$MESSAGE_STORE$MESSAGE_NAME") == "STARRED" ]; then echo 'src="img/openclipart/stock-star.png" alt="Star" title="Remove star"'; else echo 'src="img/openclipart/stock-star-empty.png" alt="Hollow star" title="Star message"'; fi %>>
+		</div><!-- #hide-form -->
+	      </form>
 	      <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %> |  <% date -D %s +" %H:%M - %B %d" -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
 	      <hr>
 	      <div id="buttons" style="float:right;">

@@ -27,7 +27,7 @@ echo $SHARE_STATUS >> $MESSAGE
 echo $OWNERSHIP >> $MESSAGE
 echo 0 >> $MESSAGE
 echo "VISIBLE" >> $MESSAGE
-echo "" >> $MESSAGE
+echo "NOSTAR" >> $MESSAGE
 echo "" >> $MESSAGE
 echo $SENDER_NAME >> $MESSAGE
 echo "" >> $MESSAGE

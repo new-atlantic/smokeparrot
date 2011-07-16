@@ -5,7 +5,7 @@ SHARE
 OWN
 0
 VISIBLE
-
+NOSTAR
 
 Smokeparrot
 
