@@ -104,6 +104,7 @@
 	      </div><!-- .message-info -->
 	      <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %> |  <% date -D %s +" %H:%M - %B %d" -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
 	      <hr>
+	      <div id="buttons" style="float:right;">
 	      <form action="/cgi-bin/smokeparrot" method="POST">
 		<div id="share-form">
 		  <input type="hidden" name="share_message" value="<% echo -n $MESSAGE_NAME %>" >
@@ -113,9 +114,10 @@
 	      <form action="/cgi-bin/smokeparrot" method="POST">
 		<div id="hide-form">
 		  <input type="hidden" name="hide_message" value="<% echo -n $MESSAGE_NAME %>" >
-		  <button type=submit id="share-button"><% if [ $(/bin/sed -n '8q7p' "$MESSAGE_STORE$MESSAGE_NAME") == "VISIBLE" ]; then echo "Hide message"; else echo "Make visible"; fi %></button>
+		  <button type=submit id="share-button"><% if [ $(/bin/sed -n '8q7p' "$MESSAGE_STORE$MESSAGE_NAME") == "VISIBLE" ]; then echo "Hide"; else echo "Make visible"; fi %></button>
 		</div><!-- #hide-form -->
 	      </form>
+	      </div><!-- #buttons -->
 	      <p class="content"><% echo -n $(/bin/sed -n '12,$p' "$MESSAGE_STORE$MESSAGE_NAME" | awk '{ print $0 "<br>"}') %></p>
 	    </div><!-- .message -->
 	    <% done %>           
@@ -128,12 +130,14 @@
 	<% if [ ! $POSTER == "" ];then %>
 	<p><span class="quiet"><% echo -n $POSTER %>'s Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %></p>
 	<% else %>
-	<p><span class="quiet">Own Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %></p>
+	<p><span class="quiet">Own Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %><img src="img/openclipart/wireless_transmitter_bra_01.svg" width="65" style="position:relative;left:5px;margin-top:-60px;" title="Your node"></p>
 	<% fi %>
+	<hr>
+	<img alt="Neighbours" src="img/openclipart/people.png" height="50" width="50" title="Your neighbours">
 	<p><span class="quiet">Neighbouring Nodes:</span></p>
 	<ul>
 	  <% for i in $($SMOKEPARROT_PATH/lib/GetNeighbours.sh); do %>
-	  <li><% echo $i %></li>
+	  <li title="IP-address"><% echo $i %></li>
 	  <% done %> 
 	</ul>
 	<p><a href="http://naapurisopu.fi/smokeparrot">About Us</a></p>
