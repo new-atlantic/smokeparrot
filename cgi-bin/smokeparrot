@@ -66,9 +66,9 @@
 	<div id="poster">
 	  <form action="/cgi-bin/smokeparrot" method="POST">
 	    <div id="post-form">
-	      <textarea name="message_body" id="post-text" placeholder="Insert your post here"></textarea>
+	      <textarea name="message_body" id="post-text" cols="63" rows="4" placeholder="Insert your post here"></textarea>
 	      <%# The post button is disabled while the textarea is empty. %>
-	      <input type="text" name="sender_name" id="sender-name" size="25" placeholder="Your name"></input>
+	      <input type="text" name="sender_name" id="sender-name" size="25" placeholder="Your name">
 	      <button type=submit id="post-button" disabled="disabled">Post</button>
 	    </div><!-- #post-form -->
 	  </form>
@@ -106,24 +106,24 @@
 		<% fi %>
 	      </div><!-- .message-info -->
 	      <form action="/cgi-bin/smokeparrot" method="POST">
-		<div id="star-form" style="float:left;">
+		<div class="star-form" style="float:left;">
 		  <input type="hidden" name="star_message" value="<% echo -n $MESSAGE_NAME %>" >
-		  <input type=image id="share-button" <% if [ $(/bin/sed -n '9q8p' "$MESSAGE_STORE$MESSAGE_NAME") == "STARRED" ]; then echo 'src="img/openclipart/stock-star.png" alt="Star" title="Remove star"'; else echo 'src="img/openclipart/stock-star-empty.png" alt="Hollow star" title="Star message"'; fi %>>
+		  <input type="image" class="star-button" <% if [ $(/bin/sed -n '9q8p' "$MESSAGE_STORE$MESSAGE_NAME") == "STARRED" ]; then echo 'src="img/openclipart/stock-star.png" alt="Star" title="Remove star"'; else echo 'src="img/openclipart/stock-star-empty.png" alt="Hollow star" title="Star message"'; fi %>>
 		</div><!-- #hide-form -->
 	      </form>
 	      <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %> |  <% date -D %s +" %H:%M - %B %d" -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
 	      <hr>
-	      <div id="buttons" style="float:right;">
+	      <div class="buttons" style="float:right;">
 	      <form action="/cgi-bin/smokeparrot" method="POST">
-		<div id="share-form">
+		<div class="share-form">
 		  <input type="hidden" name="share_message" value="<% echo -n $MESSAGE_NAME %>" >
-		  <button type=submit id="share-button"><% if [ $(/bin/sed -n '5q4p' "$MESSAGE_STORE$MESSAGE_NAME") == "SHARE" ]; then echo "Unshare"; else echo "Share"; fi %></button>
+		  <button type=submit class="share-button"><% if [ $(/bin/sed -n '5q4p' "$MESSAGE_STORE$MESSAGE_NAME") == "SHARE" ]; then echo "Unshare"; else echo "Share"; fi %></button>
 		</div><!-- #share-form -->
 	      </form>
 	      <form action="/cgi-bin/smokeparrot" method="POST">
-		<div id="hide-form">
+		<div class="hide-form">
 		  <input type="hidden" name="hide_message" value="<% echo -n $MESSAGE_NAME %>" >
-		  <button type=submit id="share-button"><% if [ $(/bin/sed -n '8q7p' "$MESSAGE_STORE$MESSAGE_NAME") == "VISIBLE" ]; then echo "Hide"; else echo "Make visible"; fi %></button>
+		  <button type=submit class="hide-button"><% if [ $(/bin/sed -n '8q7p' "$MESSAGE_STORE$MESSAGE_NAME") == "VISIBLE" ]; then echo "Hide"; else echo "Make visible"; fi %></button>
 		</div><!-- #hide-form -->
 	      </form>
 	      </div><!-- #buttons -->
@@ -139,7 +139,8 @@
 	<% if [ ! $POSTER == "" ];then %>
 	<p><span class="quiet"><% echo -n $POSTER %>'s Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %></p>
 	<% else %>
-	<p><span class="quiet">Own Node:</span><br><% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %><img src="img/openclipart/wireless_transmitter_bra_01.svg" width="65" style="position:relative;left:5px;margin-top:-60px;" title="Your node"></p>
+	<p><span class="quiet">Own Node:</span><br><span title="<% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %>"><% uci get system.@system[0].hostname
+ %></span><img src="img/openclipart/wireless_transmitter_bra_01.svg" width="65" style="position:relative;left:5px;margin-top:-60px;" alt="radio transmitter" title="Your node"></p>
 	<% fi %>
 	<hr>
 	<img alt="Neighbours" src="img/openclipart/people.png" height="50" width="50" title="Your neighbours">
@@ -151,6 +152,17 @@
 	</ul>
 	<p><a href="http://naapurisopu.fi/smokeparrot">About Us</a></p>
 	<p><a href="/cgi-bin/smokeparrot#">Help</a></p>
+	<hr>
+	<p><span class="quiet">Device information</span></p>
+	<p>Storage used: <% df -h /overlay | awk '/overlay/{ print $5 }' %></p>
+	<p>Router date: <% date +%Y-%m-%d %></p>
+	<hr>
+	 <form action="/cgi-bin/smokeparrot" method="POST">
+	   <div id="delete-form">
+	     <input type="hidden" name="delete_messages" value="true" >
+	     <button type=submit id="delete-button">Delete messages</button>
+	   </div><!-- #delete-form -->
+	 </form>
       </div><!-- #aside -->
       <div id="footer" class="quiet span-22 prepend-1 append-1 last">
 	<hr>
