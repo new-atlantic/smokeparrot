@@ -19,6 +19,9 @@
 <% if [ "$POST_star_message" ]; then %>
   <% $SMOKEPARROT_PATH/lib/StarMessageToggle.sh "$POST_star_message" /dev/null 2>&1 %>
 <% fi %>
+<% if [ "$POST_delete_hidden_messages" == "true" ]; then %>
+  <% $SMOKEPARROT_PATH/lib/DeleteHiddenMessages.sh /dev/null 2>&1 %>
+<% fi %>
 <% echo -en "content-type: text/html\r\n\r\n" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
     "http://www.w3.org/TR/html4/strict.dtd">
@@ -159,10 +162,11 @@
 	<hr>
 	 <form action="/cgi-bin/smokeparrot" method="POST">
 	   <div id="delete-form">
-	     <input type="hidden" name="delete_messages" value="true" >
-	     <button type=submit id="delete-button">Delete messages</button>
+	     <input type="hidden" name="delete_hidden_messages" value="true" >
+	     <button type=submit id="delete-button">Delete hidden messages</button>
 	   </div><!-- #delete-form -->
 	 </form>
+	 <br>
       </div><!-- #aside -->
       <div id="footer" class="quiet span-22 prepend-1 append-1 last">
 	<hr>

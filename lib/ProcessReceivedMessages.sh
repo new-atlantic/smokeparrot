@@ -26,23 +26,29 @@ for QUEUED_MESSAGE_NAME in $QUEUE_LIST; do
       IN_STORE=1
     fi
   done
-  # If message does not exist in store.
-  if [ $IN_STORE == 0 ]; then
-    TIMESTAMP=$(date +%s)
-    MESSAGE_RECEIVED="$TIMESTAMP"
-    HASH=$(/bin/sed -n '3p' "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME")
-    NEW_NAME="$MESSAGE_RECEIVED-$HASH.txt"
-    echo $NEW_NAME
-    # Move message to the store and rename it with the current time.
-    /bin/mv "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME" "$MESSAGE_STORE$NEW_NAME"
-    DISTANCE=$(/bin/sed -n '6p' "$MESSAGE_STORE$NEW_NAME")
-    # Increment distance traveled.
-    /bin/sed -i "6s/$DISTANCE/$(expr $DISTANCE + 1)/" "$MESSAGE_STORE$NEW_NAME"
-    # Set times received to 1.
-    /bin/sed -i "5s/.*/RECEIVED 1/" "$MESSAGE_STORE$NEW_NAME"
-    /bin/sed -i '4s/SHARE/NOSHARE/' "$MESSAGE_STORE$NEW_NAME"
+
+  HASH=$(/bin/sed -n '3p' "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME")
+  if [ "$HASH" == $(cat "$SMOKEPARROT_PATH/deleted_messages" | grep "$HASH") ]; then
+      /bin/rm "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME"
   else
-    /bin/rm "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME"
+
+  # If message does not exist in store.
+      if [ $IN_STORE == 0 ]; then
+	  TIMESTAMP=$(date +%s)
+	  MESSAGE_RECEIVED="$TIMESTAMP"
+	  NEW_NAME="$MESSAGE_RECEIVED-$HASH.txt"
+	  echo $NEW_NAME
+    # Move message to the store and rename it with the current time.
+	  /bin/mv "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME" "$MESSAGE_STORE$NEW_NAME"
+	  DISTANCE=$(/bin/sed -n '6p' "$MESSAGE_STORE$NEW_NAME")
+    # Increment distance traveled.
+	  /bin/sed -i "6s/$DISTANCE/$(expr $DISTANCE + 1)/" "$MESSAGE_STORE$NEW_NAME"
+    # Set times received to 1.
+	  /bin/sed -i "5s/.*/RECEIVED 1/" "$MESSAGE_STORE$NEW_NAME"
+	  /bin/sed -i '4s/SHARE/NOSHARE/' "$MESSAGE_STORE$NEW_NAME"
+      else
+	  /bin/rm "$MESSAGE_QUEUE$QUEUED_MESSAGE_NAME"
+      fi
   fi
 done
 
