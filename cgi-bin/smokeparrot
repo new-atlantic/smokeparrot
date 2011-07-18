@@ -29,9 +29,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <title>Smokeparrot</title>
-    <base href="/">
+    <base href="http://<% echo -n $($SMOKEPARROT_PATH/lib/GetAddress.sh) %>/">
     <link rel="stylesheet" href="/css/blueprint/screen.css">
-    <!--[if lt IE 8]><link rel="stylesheet" href="blueprint/ie" /><![endif]-->
+    <!--[if lt IE 8]><link rel="stylesheet" href="/css/blueprint/ie" /><![endif]-->
     <link rel="stylesheet" href="/css/custom.css">
     <script type="text/javascript" src="js/jquery-1.6.min.js"></script>
     <script type="text/javascript">
@@ -67,11 +67,11 @@
       </div><!-- #header -->
       <div id="main" class="span-15 prepend-1 colborder">
 	<div id="poster">
-	  <form action="/cgi-bin/smokeparrot" method="POST">
+	  <form action="cgi-bin/smokeparrot" method="POST">
 	    <div id="post-form">
 	      <textarea name="message_body" id="post-text" cols="63" rows="4" placeholder="Insert your post here"></textarea>
 	      <%# The post button is disabled while the textarea is empty. %>
-	      <input type="text" name="sender_name" id="sender-name" size="25" placeholder="Your name">
+	      <p>Name: <input type="text" name="sender_name" id="sender-name" size="25" placeholder="Your name"></p>
 	      <button type=submit id="post-button" disabled="disabled">Post</button>
 	    </div><!-- #post-form -->
 	  </form>
@@ -80,7 +80,7 @@
 	  <h2>Recently Smoked</h2>
 	  <%# A filter to search messages. Currently functionality is implemented with jQuery. %>
 	  <div id="filter">
-	    <input id="filter-text" type="text" class="text" placeholder="Insert your filter query here">
+	    <input id="filter-text" type="text" class="text" placeholder="Insert your filter query here. (Empty query shows hidden messages.)">
 	    <button id="filter-button">Filter</button>
 	  </div><!-- #filter -->
 	  <hr class="space">
@@ -108,7 +108,7 @@
 		<br>
 		<% fi %>
 	      </div><!-- .message-info -->
-	      <form action="/cgi-bin/smokeparrot" method="POST">
+	      <form action="cgi-bin/smokeparrot" method="POST">
 		<div class="star-form" style="float:left;">
 		  <input type="hidden" name="star_message" value="<% echo -n $MESSAGE_NAME %>" >
 		  <input type="image" class="star-button" <% if [ $(/bin/sed -n '9q8p' "$MESSAGE_STORE$MESSAGE_NAME") == "STARRED" ]; then echo 'src="img/openclipart/stock-star.png" alt="Star" title="Remove star"'; else echo 'src="img/openclipart/stock-star-empty.png" alt="Hollow star" title="Star message"'; fi %>>
@@ -117,13 +117,13 @@
 	      <p class="sender-name quiet"><% echo -n $(/bin/sed -n '10p' "$MESSAGE_STORE$MESSAGE_NAME") %> |  <% date -D %s +" %H:%M - %B %d" -d $(/bin/sed -n '2p' "$MESSAGE_STORE$MESSAGE_NAME") %></p>
 	      <hr>
 	      <div class="buttons" style="float:right;">
-	      <form action="/cgi-bin/smokeparrot" method="POST">
+	      <form action="cgi-bin/smokeparrot" method="POST">
 		<div class="share-form">
 		  <input type="hidden" name="share_message" value="<% echo -n $MESSAGE_NAME %>" >
 		  <button type=submit class="share-button"><% if [ $(/bin/sed -n '5q4p' "$MESSAGE_STORE$MESSAGE_NAME") == "SHARE" ]; then echo "Unshare"; else echo "Share"; fi %></button>
 		</div><!-- #share-form -->
 	      </form>
-	      <form action="/cgi-bin/smokeparrot" method="POST">
+	      <form action="cgi-bin/smokeparrot" method="POST">
 		<div class="hide-form">
 		  <input type="hidden" name="hide_message" value="<% echo -n $MESSAGE_NAME %>" >
 		  <button type=submit class="hide-button"><% if [ $(/bin/sed -n '8q7p' "$MESSAGE_STORE$MESSAGE_NAME") == "VISIBLE" ]; then echo "Hide"; else echo "Make visible"; fi %></button>
@@ -158,7 +158,7 @@
 	<hr>
 	<p><span class="quiet">Device information</span></p>
 	<p>Storage used: <% df -h /overlay | awk '/overlay/{ print $5 }' %></p>
-	<form action="/cgi-bin/smokeparrot" method="POST">
+	<form action="cgi-bin/smokeparrot" method="POST">
 	  <div id="delete-form">
 	    <input type="hidden" name="delete_hidden_messages" value="true" >
 	    <button type=submit id="delete-button">Delete hidden messages</button>
