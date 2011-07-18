@@ -77,7 +77,7 @@
 	  </form>
 	</div><!-- #poster -->
 	<div id="feed">
-	  <h2>Recently messages</h2>
+	  <h2>Recent messages</h2>
 	  <%# A filter to search messages. Currently functionality is implemented with jQuery. %>
 	  <div id="filter">
 	    <input id="filter-text" type="text" class="text" placeholder="Search messages (Empty query shows hidden messages.)">
