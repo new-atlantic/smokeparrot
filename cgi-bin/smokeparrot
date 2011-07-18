@@ -153,20 +153,21 @@
 	  <li title="IP-address"><% echo $i %></li>
 	  <% done %> 
 	</ul>
-	<p><a href="http://naapurisopu.fi/smokeparrot">About Us</a></p>
-	<p><a href="/cgi-bin/smokeparrot#">Help</a></p>
+	<p><a href="http://naapurisopu.fi/">About Us</a></p>
+	<p><a href="http://naapurisopu.fi/smokeparrot/instructions"><img style="float:left;" src="img/openclipart/aiga_information_.svg" alt="question mark" title="Smokeparrot help" width="20">Help</a></p>
 	<hr>
 	<p><span class="quiet">Device information</span></p>
 	<p>Storage used: <% df -h /overlay | awk '/overlay/{ print $5 }' %></p>
+	<form action="/cgi-bin/smokeparrot" method="POST">
+	  <div id="delete-form">
+	    <input type="hidden" name="delete_hidden_messages" value="true" >
+	    <button type=submit id="delete-button">Delete hidden messages</button>
+	  </div><!-- #delete-form -->
+	</form>
+	<br>
 	<p>Router date: <% date +%Y-%m-%d %></p>
 	<hr>
-	 <form action="/cgi-bin/smokeparrot" method="POST">
-	   <div id="delete-form">
-	     <input type="hidden" name="delete_hidden_messages" value="true" >
-	     <button type=submit id="delete-button">Delete hidden messages</button>
-	   </div><!-- #delete-form -->
-	 </form>
-	 <br>
+	<p><a href="mailto:info@naapurisopu.fi?subject=Smokeparrot"><img style="float:left;" src="img/openclipart/mail2.png" alt="email" title="Send feedback to Naapurisopu." width="50">Send Feedback</a></p>
       </div><!-- #aside -->
       <div id="footer" class="quiet span-22 prepend-1 append-1 last">
 	<hr>
