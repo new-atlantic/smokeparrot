@@ -1,0 +1,10 @@
+		Smokeparrot
+		-----------
+
+This is the Smokeparrot daemon. It will implement the Hearsay communication
+protocol. Smokeparrot is not yet usable, but the code compiles.
+
+For installation instructions see the INSTALL file.
+
+Smokeparrot is released under the GNU General Public License version 3, which is
+distributed in the COPYING file.

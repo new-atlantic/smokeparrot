@@ -1,0 +1,3 @@
+Run './configure && make' in the smokeparrot-daemon directory to compile the program.
+
+To generate the documentation files run 'doxygen doxygen.cfg'.
