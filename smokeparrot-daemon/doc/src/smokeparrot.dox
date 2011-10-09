@@ -14,9 +14,22 @@
  *     <dd>Verbose mode. Print or log more messages.
  *  <dt>-d, --daemon
  *    <dd>Run in background as daemon.
+ *  <dt>-c, --conf-file=FILE
+ *    <dd>Use configuration file FILE.
  *  <dt>-p, --pid-file=FILE
  *    <dd>Use PID file FILE.
  *  <dt>-l, --log-file=FILE
  *    <dd>Use log file FILE.
  * </dl>
+ *
+ * @section sec_config Configuration
+ *
+ * The configuration options of the daemon are specified using the configuration
+ * file. The file configures how the daemon behaves, it does not affect the user
+ * settings which are specified via the interface used.
+ *
+ * @section sec_ifx Interfaces
+ *
+ * The Smokeparrot daemon can be used via various interfaces. The interfaces
+ * communicate with the daemon via Unix sockets.
  **/
