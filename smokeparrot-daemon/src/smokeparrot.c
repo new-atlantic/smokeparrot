@@ -70,11 +70,14 @@ bool daemon_mode;
  * @param argc Number of command line arguments.
  * @param *argv[] Array of pointers to the command line arguments.
  *
+ * @retval EXIT_FAILURE Program terminated prematurely due to an error.
+ * @retval EXIT_SUCCESS Program executed succesfully.
+ *
  * The function parses and handles command line arguments and the launches the 
  * main program. If daemon_mode is set, calls \c daemon() to fork, chdir to root
  * and close stdin, stdout and stderr.
  *
- * When \c main() exits it returns \c EXIT_FAILURE if a wrong command line option
+ * When main() exits it returns \c EXIT_FAILURE if a wrong command line option
  * is supplied or \c daemon() fails. Otherwise it exits with \c EXIT_SUCCESS.
  **/
 
@@ -213,8 +216,8 @@ main (int argc, char *argv[])
 
 	    /**
 	     * @todo After succesfully calling \c daemon() open and lock the pid
-	     * file if specified and set up the SIGHUP handler. See commented-
-	     * oout sections in sp_initialize.c.
+	     * file if specified and set up the SIGHUP handler. See 
+	     * commented-out sections in sp_initialize.c.
 	     **/
 
 	    break;

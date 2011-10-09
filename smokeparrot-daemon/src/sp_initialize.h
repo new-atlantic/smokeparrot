@@ -30,10 +30,10 @@
  * @brief Prints usage information for the program and exits.
  *
  * @param stream The stream to which the message is printed.
- * @param exit_code The exit status.
+ * @param exit_code The exit code to use when calling \c exit().
  *
- * Prints usage information for this program to STREAM (typically
- * stdout or stderr), and exits the program with EXIT_CODE.  Does not
+ * Prints usage information for this program to STREAM (typically stdout or 
+ * stderr), and exits the program with the specified  * EXIT_CODE.  Does not
  * return.
  **/
 void print_usage (FILE * stream, int exit_code);
