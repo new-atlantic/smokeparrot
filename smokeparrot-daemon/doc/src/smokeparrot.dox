@@ -1,0 +1,22 @@
+/**
+ * @file smokeparrot.dox
+ * @mainpage Smokeparrot daemon
+ *
+ * @section sec_intro Introduction
+ *
+ * The Smokeparrot daemon implements the Hearsay communication protocol.
+ *
+ * @section sec_usage Usage
+ *
+ * The program accepts the following command line options and no arguments:
+ * <dl>
+ *   <dt>-v, --verbose 
+ *     <dd>Verbose mode. Print or log more messages.
+ *  <dt>-d, --daemon
+ *    <dd>Run in background as daemon.
+ *  <dt>-p, --pid-file=FILE
+ *    <dd>Use PID file FILE.
+ *  <dt>-l, --log-file=FILE
+ *    <dd>Use log file FILE.
+ * </dl>
+ **/
