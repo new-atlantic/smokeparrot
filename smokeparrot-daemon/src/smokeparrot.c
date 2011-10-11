@@ -23,7 +23,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* 
+/*
  * Parts of the code are adapted from
  * http://siber.cankaya.edu.tr/ozdogan/SystemsProgramming/ceng425/node22.html
  */
@@ -36,7 +36,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <getopt.h>
+#include <locale.h>
 
+#include "sp_common.h"
 #include "sp_initialize.h"
 #include "sp_logging.h"
 
@@ -50,7 +52,7 @@ const char *program_name;
 
 /**
  * @brief Flag to indicate verbose mode.
- * 
+ *
  * If verbose_mode is true print or log more error messages.
  **/
 bool verbose_mode;
@@ -70,11 +72,14 @@ bool daemon_mode;
  * @param argc Number of command line arguments.
  * @param *argv[] Array of pointers to the command line arguments.
  *
+ * @retval EXIT_FAILURE Program terminated prematurely due to an error.
+ * @retval EXIT_SUCCESS Program executed succesfully.
+ *
  * The function parses and handles command line arguments and the launches the 
  * main program. If daemon_mode is set, calls \c daemon() to fork, chdir to root
  * and close stdin, stdout and stderr.
  *
- * When \c main() exits it returns \c EXIT_FAILURE if a wrong command line option
+ * When main() exits it returns \c EXIT_FAILURE if a wrong command line option
  * is supplied or \c daemon() fails. Otherwise it exits with \c EXIT_SUCCESS.
  **/
 
@@ -88,6 +93,13 @@ main (int argc, char *argv[])
 
   const char *const short_options = "hvVdc:p:l:";	/* A string listing valid short 
 							   options. */
+
+  setlocale (LC_ALL, "");
+
+#if ENABLE_NLS
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+#endif
 
   /* An array describing valid long options.  */
   const struct option long_options[] = {
@@ -167,22 +179,22 @@ main (int argc, char *argv[])
   /* Report program status to STREAM before calling daemon(). */
   if (verbose_mode)
     {
-      printf ("Running in verbose mode.\n");
+      printf (_("Running in verbose mode.\n"));
       if (config_file != NULL)
 	{
-	  printf ("The configuration file name is %s.\n", config_file);
+	  printf (_("The configuration file name is %s.\n"), config_file);
 	}
       if (pid_file != NULL)
 	{
-	  printf ("The pid file name is %s.\n", pid_file);
+	  printf (_("The pid file name is %s.\n"), pid_file);
 	}
       if (log_file != NULL)
 	{
-	  printf ("The log file name is %s.\n", log_file);
+	  printf (_("The log file name is %s.\n"), log_file);
 	}
       if (daemon_mode)
 	{
-	  printf ("Running in daemon mode.\n");
+	  printf (_("Running in daemon mode.\n"));
 	}
     }
 
@@ -191,7 +203,7 @@ main (int argc, char *argv[])
     {
       if (verbose_mode)
 	{
-	  printf ("Calling daemon () to fork into background.\n");
+	  printf (_("Calling daemon () to fork into background.\n"));
 	}
 
       /* Handle the return value of daemon(). */
@@ -207,14 +219,14 @@ main (int argc, char *argv[])
 		  }
 		else
 		  {
-		    write_log_message ("Smokeparrot daemon started");
+		    write_log_message (_("Smokeparrot daemon started"));
 		  }
 	      }
 
 	    /**
 	     * @todo After succesfully calling \c daemon() open and lock the pid
-	     * file if specified and set up the SIGHUP handler. See commented-
-	     * oout sections in sp_initialize.c.
+	     * file if specified and set up the SIGHUP handler. See 
+	     * commented-out sections in sp_initialize.c.
 	     **/
 
 	    break;
@@ -232,7 +244,7 @@ main (int argc, char *argv[])
 		 * @todo Use the code that analyzes \c errno and include the 
 		 * name in the error message to STREAM.
 		 **/
-		write_log_message ("Failed to become daemon.");
+		write_log_message (_("Failed to become daemon."));
 	      }
 	    exit (EXIT_FAILURE);
 	  }
@@ -241,21 +253,21 @@ main (int argc, char *argv[])
   else
     /* Set logging when running in foreground. */
     {
-      write_log_message ("Running in foreground.");
+      write_log_message (_("Running in foreground."));
       if (log_file != NULL)
 	{
-	  write_log_message ("Logging further messages to file %s.",
+	  write_log_message (_("Logging further messages to file %s."),
 			     log_file);
 	  if ((open_log_file (log_file)) == -1)
 	    {
-	      write_log_message ("Opening the log file failed.");
+	      write_log_message (_("Opening the log file failed."));
 	      exit (EXIT_FAILURE);
 	    }
 	}
 
       else
 	{
-	  write_log_message ("Logging to standard output");
+	  write_log_message (_("Logging to standard output"));
 	}
     }
 
@@ -263,12 +275,12 @@ main (int argc, char *argv[])
   /* main.c - MAIN PROGRAM */
   if (verbose_mode)
     {
-      write_log_message ("Entering the program main section.");
+      write_log_message (_("Entering the program main section."));
     }
 
   if (verbose_mode)
     {
-      write_log_message ("Exiting the program.");
+      write_log_message (_("Exiting the program."));
     }
   exit (EXIT_SUCCESS);
 }

@@ -35,7 +35,7 @@
 #include <stdlib.h>
 
 #include "sp_initialize.h"
-
+#include "sp_common.h"
 
 /* GLOBAL VARIABLES */
 
@@ -47,13 +47,13 @@ extern const char *program_name;
 void
 print_usage (FILE * stream, int exit_code)
 {
-  fprintf (stream, "Usage:  %s options\n", program_name);
+  fprintf (stream, _("Usage:  %s options\n"), program_name);
   fprintf (stream,
-	   "  -h  --help             Display this usage information.\n"
+         _("  -h  --help             Display this usage information.\n"
 	   "  -d  --daemon           Run in background.\n"
 	   "  -p  --pid-file file    Use pid-file file.\n"
 	   "  -l  --log-file file    Use log-file file.\n"
-	   "  -v  --verbose          Print verbose messages.\n");
+	   "  -v  --verbose          Print verbose messages.\n"));
   exit (exit_code);
 }
 

@@ -37,7 +37,7 @@
 #include <stdarg.h>
 
 #include "sp_logging.h"
-
+#include "sp_common.h"
 
 /* DEFINES */
 
@@ -73,7 +73,7 @@ open_log_file (const char *log_file)
   umask (mask);
   setbuf (log_file_stream, NULL);
 
-  write_log_message ("Log file opened succesfully");
+  write_log_message (_("Log file opened succesfully"));
 
   return 0;
 }
@@ -81,7 +81,7 @@ open_log_file (const char *log_file)
 int
 close_log_file (void)
 {
-  write_log_message ("Closing log file");
+  write_log_message (_("Closing log file"));
   if (fclose (log_file_stream) != 0)
     {
       return -1;
@@ -108,7 +108,7 @@ write_log_message (const char *format, ...)
 	  || (strftime (timestamp, TIMESTAMP_BUFFER_SIZE,
 			TIMESTAMP_FORMAT, local_time) == 0))
 	{
-	  printf ("???Unknown time???: ");
+	  printf (_("???Unknown time???: "));
 	}
       else
 	{
@@ -128,7 +128,7 @@ write_log_message (const char *format, ...)
 	  || (strftime (timestamp, TIMESTAMP_BUFFER_SIZE,
 			TIMESTAMP_FORMAT, local_time) == 0))
 	{
-	  fprintf (log_file_stream, "???Unknown time???: ");
+	  fprintf (log_file_stream, _("???Unknown time???: "));
 	}
       else
 	{

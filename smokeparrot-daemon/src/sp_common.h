@@ -1,6 +1,6 @@
 /**
- * @file sp_initialize.h
- * @brief Logging facilities for the Smokeparrot daemon.
+ * @file sp_common.h
+ * @brief Common definitions and includes for the Smokeparrot daemon.
  * @version 0.1
  **/
 
@@ -23,19 +23,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SP_INITIALIZE_H
-#define SP_INITIALIZE_H
+#ifndef SP_COMMON_H
+#define SP_COMMON_H
 
-/**
- * @brief Prints usage information for the program and exits.
- *
- * @param stream The stream to which the message is printed.
- * @param exit_code The exit code to use when calling \c exit().
- *
- * Prints usage information for this program to STREAM (typically stdout or 
- * stderr), and exits the program with the specified  * EXIT_CODE.  Does not
- * return.
- **/
-void print_usage (FILE * stream, int exit_code);
+/* INCLUDES */
+
+#include <config.h>
+#include <libintl.h>
+
+
+/* DEFINES */
+
+#define _(STRING)    gettext(STRING)
+
 
 #endif
