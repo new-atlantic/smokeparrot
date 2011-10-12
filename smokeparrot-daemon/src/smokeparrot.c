@@ -91,7 +91,7 @@ main (int argc, char *argv[])
 
   int next_option;		/* Iterator for options. */
 
-  const char *const short_options = "hvVdc:p:l:";	/* A string listing valid short 
+  const char *const short_options = "hvVdkc:p:l:";	/* A string listing valid short 
 							   options. */
 
   setlocale (LC_ALL, "");
@@ -107,6 +107,7 @@ main (int argc, char *argv[])
     {"verbose", no_argument, NULL, 'v'},
     {"version", no_argument, NULL, 'V'},
     {"daemon", no_argument, NULL, 'd'},
+    {"kill", no_argument, NULL, 'k'},
     {"conf-file", required_argument, NULL, 'c'},
     {"pid-file", required_argument, NULL, 'p'},
     {"log-file", required_argument, NULL, 'l'},
@@ -147,6 +148,16 @@ main (int argc, char *argv[])
 
 	case 'd':		/* -d or --daemon */
 	  daemon_mode = true;
+	  break;
+
+	case 'k':               /* -k or --kill */
+	  /**
+	   * @bug \c --kill prints usage instead of killing a running instance.
+	   * @todo Replace with a function that kills the running daemon if a
+	   *       pid-file was specified. Otherwise returns an error saying
+	   *       that that a pid-file was not specified.
+	   */
+	  print_usage (stdout, EXIT_SUCCESS);
 	  break;
 
 	case 'c':		/* -c, --conf-file=FILE */

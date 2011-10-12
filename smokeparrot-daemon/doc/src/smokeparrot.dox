@@ -10,10 +10,16 @@
  *
  * The program accepts the following command line options and no arguments:
  * <dl>
- *   <dt>-v, --verbose 
+ *  <dt>-h, --help
+ *    <dd>Displays this usage information.
+ *  <dt>-v, --verbose 
  *     <dd>Verbose mode. Print or log more messages.
+ *  <dt>-V, --version
+ *    <dd>Prints the program version. 
  *  <dt>-d, --daemon
  *    <dd>Run in background as daemon.
+ *  <dt>-k, --kill
+ *    <dd>Kill smokeparrot running in daemon mode.
  *  <dt>-c, --conf-file=FILE
  *    <dd>Use configuration file FILE.
  *  <dt>-p, --pid-file=FILE

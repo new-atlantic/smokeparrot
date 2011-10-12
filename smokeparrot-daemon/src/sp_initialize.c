@@ -49,11 +49,14 @@ print_usage (FILE * stream, int exit_code)
 {
   fprintf (stream, _("Usage:  %s options\n"), program_name);
   fprintf (stream,
-         _("  -h  --help             Display this usage information.\n"
-	   "  -d  --daemon           Run in background.\n"
-	   "  -p  --pid-file file    Use pid-file file.\n"
-	   "  -l  --log-file file    Use log-file file.\n"
-	   "  -v  --verbose          Print verbose messages.\n"));
+         _("  -h  --help                Display this usage information.\n"
+	   "  -d  --daemon              Run in background.\n"
+	   "  -k  --kill                Kill smokeparrot running in daemon mode.\n"
+	   "  -c  --config-file FILE    Use configuration file FILE.\n"
+	   "  -p  --pid-file FILE       Use pid-file FILE.\n"
+	   "  -l  --log-file FILE       Use log-file FILE.\n"
+	   "  -v  --verbose             Print verbose messages.\n"
+	   "  -V  --version             Prints the program version.\n"));
   exit (exit_code);
 }
 
