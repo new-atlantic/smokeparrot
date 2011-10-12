@@ -1,6 +1,6 @@
 /**
- * @file sp_common.h
- * @brief Common definitions and includes for the Smokeparrot daemon.
+ * @file sp_signals.h
+ * @brief Signal handling for smokeparrot.
  * @version 0.1
  **/
 
@@ -23,19 +23,18 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef SP_COMMON_H
-#define SP_COMMON_H
+#ifndef SP_SIGNALS_H
+#define SP_SIGNALS_H
 
-/* INCLUDES */
-
-#include <config.h>
-#include <libintl.h>
-#include <stdbool.h>
-
-
-/* DEFINES */
-
-#define _(STRING)    gettext(STRING)
-
+/**
+ * @brief Sets up signal handling.
+ *
+ * @retval
+ * @retval
+ *
+ * Sets up new signal handlers for signals.
+ *
+ **/
+int setup_signal_handling(void);
 
 #endif

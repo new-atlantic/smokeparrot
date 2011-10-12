@@ -1,6 +1,6 @@
 /**
  * @file sp_initialize.h
- * @brief Logging facilities for the Smokeparrot daemon.
+ * @brief Assisting functions for main() in smokeparrot.c.
  * @version 0.1
  **/
 
@@ -37,5 +37,22 @@
  * return.
  **/
 void print_usage (FILE * stream, int exit_code);
+
+/**
+ * @brief Creates a locked file to ensure that only one instance of the daemon
+ *        is running.
+ *
+ * @param *pid_file Pointer to the pid-file to be used.
+ *
+ * @retval -1 Creating or locking the pid-file failed.
+ * @retval file_descriptor File descriptor for the pid file.
+ *
+ * Creates and or locks the file specified with \c *pid_file. This is used to
+ * ensure that only one daemon instance is running. It does not, at the moment,
+ * distinguish between errors caused by a previous lock by a running instance
+ * and other errors causing the function call to fail, i.e. a return value of
+ * -1 does not guarantee that an instance is actually running.
+ **/
+int create_pid_file (const char *pid_file);
 
 #endif

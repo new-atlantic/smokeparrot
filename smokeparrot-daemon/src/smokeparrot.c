@@ -34,13 +34,13 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <getopt.h>
 #include <locale.h>
 
 #include "sp_common.h"
 #include "sp_initialize.h"
 #include "sp_logging.h"
+#include "sp_signals.h"
 
 
 /* GLOBAL VARIABLES */
@@ -90,6 +90,7 @@ main (int argc, char *argv[])
   /* main.c - HANDLING OF THE PROGRAM CALL */
 
   int next_option;		/* Iterator for options. */
+  int pid_fd = -1;
 
   const char *const short_options = "hvVdkc:p:l:";	/* A string listing valid short 
 							   options. */
@@ -222,23 +223,57 @@ main (int argc, char *argv[])
 	{
 	case 0:
 	  {
-	    if (log_file != NULL)
+	    /**
+	     * @todo Move post daemon() task to sp_initialize.c.
+	     **/
+	    if (pid_file != NULL)
 	      {
-		if ((open_log_file (log_file)) == -1)
+		pid_fd = create_pid_file (pid_file);
+		if ((pid_fd) == -1)
 		  {
+		    write_log_message (_("Another instance running."));
+		    write_log_message (_("Exiting..."));
 		    exit (EXIT_FAILURE);
 		  }
 		else
 		  {
+		    if (log_file != NULL)
+		      {
+			if ((open_log_file (log_file)) == -1)
+			  {
+			    exit (EXIT_FAILURE);
+			  }
+		      }
 		    write_log_message (_("Smokeparrot daemon started"));
 		  }
 	      }
+	    else
+	      {
+		if (log_file != NULL)
+		  {
+		    if ((open_log_file (log_file)) == -1)
+		      {
+			exit (EXIT_FAILURE);
+		      }
+		  }
+		write_log_message (_("Smokeparrot daemon started"));
+		write_log_message (_("No pid-file specified. Multiple instances"
+				     " may be running"));
+	      }
 
-	    /**
-	     * @todo After succesfully calling \c daemon() open and lock the pid
-	     * file if specified and set up the SIGHUP handler. See 
-	     * commented-out sections in sp_initialize.c.
-	     **/
+	    if ((setup_signal_handling()) == -1)
+	      {
+		write_log_message (_("Setting up signal handling failed."
+				     " Exiting..."));
+		exit (EXIT_FAILURE);
+	      }
+	    else
+	      {
+		if (verbose_mode)
+		  {
+		    write_log_message (_("Signal handling set up."));
+		  }
+	      }
 
 	    break;
 	  }
@@ -289,33 +324,31 @@ main (int argc, char *argv[])
       write_log_message (_("Entering the program main section."));
     }
 
+  sleep(30);
+
+  /**
+   * @todo Move cleanup and closing to sp_initialize.c.
+   **/
+
   if (verbose_mode)
     {
       write_log_message (_("Exiting the program."));
     }
+
+  if ((pid_file != NULL) && (pid_fd != -1))
+    {
+      if (verbose_mode)
+	{
+	  write_log_message(_("Removing pid file."));
+	}
+      close (pid_fd);
+      unlink (pid_file);
+    }
+
+  if (log_file)
+    {
+      close_log_file ();
+    }
+
   exit (EXIT_SUCCESS);
 }
-
-
-
-
-/*   for (;;) */
-/*     { */
-/*       if (hup_signal_received != 0) */
-/* 	{ */
-/* 	  hup_signal_received = 0; */
-/* 	  if ((CloseLogFile ()) == -1) */
-/* 	    { */
-/* 	      WriteLogMessage ("Could not close log file properly."); */
-/* 	    } */
-/* 	  else */
-/* 	    { */
-/* 	      OpenLogFile (LOG_FILE); */
-/* 	    } */
-
-/* 	} */
-/*       sleep (30); */
-/*       /\* CloseLogFile (); *\/ */
-/*       /\* exit (EXIT_SUCCESS); *\/ */
-/*     } */
-/* } */
