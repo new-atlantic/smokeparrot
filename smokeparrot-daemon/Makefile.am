@@ -10,6 +10,13 @@ AM_CPPFLAGS = -DLOCALEDIR=\"$(localedir)\"
 # _BSD_SOURCE is required to expose daemon() in unistd.h.
 AM_CFLAGS = -D_XOPEN_SOURCE=600 \
             -D_BSD_SOURCE \
+            -D_FORTIFY_SOURCE=2 \
+            -fstack-protector-all \
+            -Wstack-protector \
+            -O2 \
+            -Wl,-z,relro \
+            -Wl,--no-copy-dt-needed-entries \
+            -Wl,--as-needed \
             -std=c99 \
             -pedantic \
             -Wall \
