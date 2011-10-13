@@ -14,9 +14,12 @@ AM_CFLAGS = -D_XOPEN_SOURCE=600 \
             -fstack-protector-all \
             -Wstack-protector \
             -O2 \
+            -pie \
+            -fpie \
             -Wl,-z,relro \
             -Wl,--no-copy-dt-needed-entries \
             -Wl,--as-needed \
+            -Wl,-z,now \
             -std=c99 \
             -pedantic \
             -Wall \
