@@ -1,0 +1,19 @@
+ Smokeparrot
+-------------
+
+Smokeparrot is a proximity based mesh-aware micro-blogging application.
+
+1. smokeparrot-luci
+
+Smokeparrot-LuCI is an interface for Smokeparrot integrated to the Lua
+Configuration Interface (LuCI).
+
+2. License
+
+Smokeparrot is free software; you can redistribute it and/or modify it under
+the terms of the GNU General Public License as published by the Free Software 
+Foundation; either version 3 of the License, or (at your option) any later
+version.
+
+You can find a copy of the license in the COPYING file or at
+http://www.gnu.org/licenses/gpl-3.0.txt
