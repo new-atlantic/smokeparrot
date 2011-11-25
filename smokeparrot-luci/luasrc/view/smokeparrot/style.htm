@@ -1,0 +1,37 @@
+<%#
+Smokeparrot-LuCI - LuCI based interface for Smokeparrot
+
+Copyright 2011 Torsti Schulz <torsti.schulz@iki.fi>
+
+This file is part of the Smokeparrot.
+
+Smokeparrot is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Smokeparrot is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-%>
+<style type="text/css">
+  /* common */
+  .nofloat { clear: both; }
+  /* footer */
+  div#sp_footer p.sp_copyright { float: left; }
+  div#sp_footer p.sp_prototype { float: right; }
+  /* stream */
+  div.sp_message-container { border: 1px solid black; overflow: auto; }
+  div.sp_message-info-container { float: right; }
+  div.own { background-color: #efefdd; }
+  div.received { background-color: #efef99; }
+  div.sp_star-form { float: left; }
+  /* poster */
+  div#sp_post-form { width: 400px; }  
+  textarea#sp_post-text { width: 400px; }
+  button#sp_post-button { float: right; }
+</style>

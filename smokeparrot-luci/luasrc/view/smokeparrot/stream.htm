@@ -1,0 +1,66 @@
+<%#
+Smokeparrot-LuCI - LuCI based interface for Smokeparrot
+
+Copyright 2011 Torsti Schulz <torsti.schulz@iki.fi>
+
+This file is part of the Smokeparrot.
+
+Smokeparrot is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+Smokeparrot is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-%>
+<%+header%>
+<%+smokeparrot/style%>
+<h2>Smokeparrot</h2>
+<form action="<%=controller%>/apps/smokeparrot/stream/post" method="POST"> 
+<div id="sp_post-form">
+  <textarea name="sp_message-body" id="sp_post-text" cols="63" rows="2" placeholder="Insert your post here"></textarea>
+  <button type="submit" id="sp_post-button">Post</button>
+</div><!-- #sp_post-form -->
+</form>
+<br class="nofloat" />
+<div id="sp_stream">
+<% local i = 1 %>
+<% while messages[i] do %>
+<div id="<%=messages[i].id%>" class="sp_message-container<% if messages[i].own then %> own<% else %> received<% end %>">
+  <div class="sp_message-info-container">
+    <p class="sp_message-name"><%=messages[i].name%></p>
+    <p class="sp_message-name"><%=messages[i].node%></p>
+    <p class="sp_message-time"><%=os.date("%c", messages[i].time)%></p>
+  </div><!-- .sp_message-info-container -->
+  <form action="<%=controller%>/apps/smokeparrot/stream/post" method="POST">
+    <div class="sp_star-form">
+      <input type="hidden" name="sp_star-message"  value="<%=messages[i].id%>" />
+      <input type="image" class="sp_star-button" <% if messages[i].starred then %> src="/smokeparrot/img/openclipart/stock-star.png" alt="Star" title="Remove star"<% else %>src="/smokeparrot/img/openclipart/stock-star-empty.png" alt="Hollow star" title="Star message"<% end %>/>
+    </div><!-- .sp_star-form -->
+  </form>
+  <div class="sp_message-buttons" style="float:right;">
+    <form action="<%=controller%>/apps/smokeparrot/stream/post" method="POST">
+      <div class="sp_share-form">
+	<input type="hidden" name="sp_share-message" value="<%=messages[i].id%>" />
+	<button type="submit" class="share-button"><% if messages[i].shared then %>Stop sharing<% else %>Share<% end %></button>
+      </div><!-- .sp_share-form -->
+    </form>
+    <form action="<%=controller%>/apps/smokeparrot/stream/post" method="POST">
+      <div class="sp_hide-form">
+	<input type="hidden" name="sp_hide-message" value="<%=messages[i].id%>" />
+	<button type="submit" class="hide-button"><% if messages[i].visible then %>Hide<% else %>Make visible<% end %></button>
+      </div><!-- .sp_hide-form -->
+    </form>
+  </div><!-- .sp_message-buttons -->
+  <p class="sp_message-text"><%=messages[i].text%></p>
+</div><!-- .sp_message-container -->
+<% i = i + 1 %>
+<% end %>
+</div><!-- #sp_stream -->
+<%+smokeparrot/footer%>
+<%+footer%>
