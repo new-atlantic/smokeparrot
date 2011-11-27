@@ -31,29 +31,32 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 <div id="sp_stream">
 <% local i = 1 %>
 <% while messages[i] do %>
-<div id="<%=messages[i].id%>" class="sp_message-container<% if messages[i].own then %> own<% else %> received<% end %>">
+<div id="<%=messages[i].id%>" class="sp_message-container<% if messages[i].own == 1 then %> own<% else %> received<% end %>">
   <div class="sp_message-info-container">
     <p class="sp_message-name"><%=messages[i].name%></p>
     <p class="sp_message-name"><%=messages[i].node%></p>
     <p class="sp_message-time"><%=os.date("%c", messages[i].time)%></p>
   </div><!-- .sp_message-info-container -->
-  <form action="<%=controller%>/apps/smokeparrot/stream/post" method="POST">
+  <form action="<%=controller%>/apps/smokeparrot/stream/star" method="POST">
     <div class="sp_star-form">
       <input type="hidden" name="sp_star-message"  value="<%=messages[i].id%>" />
-      <input type="image" class="sp_star-button" <% if messages[i].starred then %> src="/smokeparrot/img/openclipart/stock-star.png" alt="Star" title="Remove star"<% else %>src="/smokeparrot/img/openclipart/stock-star-empty.png" alt="Hollow star" title="Star message"<% end %>/>
+      <input type="hidden" name="sp_star-state" value="<%=messages[i].starred%>" />
+      <input type="image" class="sp_star-button" <% if messages[i].starred == "1" then %> src="/smokeparrot/img/openclipart/stock-star.png" alt="Star" title="Remove star"<% else %>src="/smokeparrot/img/openclipart/stock-star-empty.png" alt="Hollow star" title="Star message"<% end %>/>
     </div><!-- .sp_star-form -->
   </form>
   <div class="sp_message-buttons" style="float:right;">
-    <form action="<%=controller%>/apps/smokeparrot/stream/post" method="POST">
+    <form action="<%=controller%>/apps/smokeparrot/stream/share" method="POST">
       <div class="sp_share-form">
 	<input type="hidden" name="sp_share-message" value="<%=messages[i].id%>" />
-	<button type="submit" class="share-button"><% if messages[i].shared then %>Stop sharing<% else %>Share<% end %></button>
+	<input type="hidden" name="sp_share-state" value="<%=messages[i].shared%>" />
+	<button type="submit" class="share-button"><% if messages[i].shared == "1" then %>Stop sharing<% else %>Share<% end %></button>
       </div><!-- .sp_share-form -->
     </form>
-    <form action="<%=controller%>/apps/smokeparrot/stream/post" method="POST">
+    <form action="<%=controller%>/apps/smokeparrot/stream/hide" method="POST">
       <div class="sp_hide-form">
 	<input type="hidden" name="sp_hide-message" value="<%=messages[i].id%>" />
-	<button type="submit" class="hide-button"><% if messages[i].visible then %>Hide<% else %>Make visible<% end %></button>
+	<input type="hidden" name="sp_hide-state" value="<%=messages[i].hidden%>" />
+	<button type="submit" class="hide-button"><% if messages[i].hidden == "1" then %>Hide<% else %>Make visible<% end %></button>
       </div><!-- .sp_hide-form -->
     </form>
   </div><!-- .sp_message-buttons -->
