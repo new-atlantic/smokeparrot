@@ -38,16 +38,18 @@ function index()
 end
 
 function post_message()
-   local env = assert (luasql.sqlite3())
-   local conn = assert (env:connect(db_file))
-   local id = luci.http.formvalue("sp_message-body")
-   math.randomseed (os.time())
-   local res = assert (conn:execute(string.format([[
+   local message = luci.http.formvalue("sp_message-body")
+   if  message ~= "" then
+      local env = assert (luasql.sqlite3())
+      local conn = assert (env:connect(db_file))
+      math.randomseed (os.time())
+      local res = assert (conn:execute(string.format([[
 	INSERT INTO messages VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')]],
                 math.random(1, 100000), "", os.time(),
-		luci.http.formvalue("sp_message-body"), 0, 1, 1, 0 )))
-   conn:close()
-   env:close()
+		message, 0, 1, 1, 0 )))
+      conn:close()
+      env:close()
+   end
    luci.http.redirect(luci.dispatcher.build_url("apps", "smokeparrot"))
 end
 
