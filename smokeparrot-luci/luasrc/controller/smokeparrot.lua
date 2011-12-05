@@ -46,7 +46,7 @@ function post_message()
       local res = assert (conn:execute(string.format([[
 	INSERT INTO messages VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')]],
                 math.random(1, 100000), "", os.time(),
-		message, 0, 1, 1, 0 )))
+		string.gsub(message, "'", "''"), 0, 1, 1, 0 )))
       conn:close()
       env:close()
    end
