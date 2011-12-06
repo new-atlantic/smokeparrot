@@ -53,12 +53,11 @@ function post_message()
    luci.http.redirect(luci.dispatcher.build_url("apps", "smokeparrot"))
 end
 
-function star_message()
+local function update_message(action, column)
    local env = assert (luasql.sqlite3())
    local conn = assert (env:connect(db_file))
-
-   local id = luci.http.formvalue("sp_star-message")
-   local state = luci.http.formvalue("sp_star-state")
+   local id = luci.http.formvalue("sp_" .. action .. "-message")
+   local state = luci.http.formvalue("sp_" .. action .. "-state")
 
    if state == "0" then
       state = 1
@@ -67,55 +66,23 @@ function star_message()
    end
 
    local res = assert (conn:execute(string.format([[
-	UPDATE messages SET "starred" = '%s' WHERE "id" = '%s';]], state, id )))
-
+	UPDATE messages SET "%s" = '%s' WHERE "id" = '%s';]], column, state, id )))
    conn:close()
    env:close()
 
    luci.http.redirect(luci.dispatcher.build_url("apps", "smokeparrot"))
+end
+
+function star_message()
+   update_message("star","starred")
 end
 
 function share_message()
-   local env = assert (luasql.sqlite3())
-   local conn = assert (env:connect(db_file))
-
-   local id = luci.http.formvalue("sp_share-message")
-   local state = luci.http.formvalue("sp_share-state")
-
-   if state == "0" then
-      state = 1
-   else
-      state = 0
-   end
-
-   local res = assert (conn:execute(string.format([[
-	UPDATE messages SET "shared" = '%s' WHERE "id" = '%s';]], state, id )))
-
-   conn:close()
-   env:close()
-
-   luci.http.redirect(luci.dispatcher.build_url("apps", "smokeparrot"))
+   update_message("share","shared")
 end
 
 function hide_message()
-   local env = assert (luasql.sqlite3())
-   local conn = assert (env:connect(db_file))
-
-   local id = luci.http.formvalue("sp_hide-message")
-   local state = luci.http.formvalue("sp_hide-state")
-
-   if state == "0" then
-      state = 1
-   else
-      state = 0
-   end
-   local res = assert (conn:execute(string.format([[
-	UPDATE messages SET "hidden" = '%s' WHERE "id" = '%s';]], state, id )))
-
-   conn:close()
-   env:close()
-
-   luci.http.redirect(luci.dispatcher.build_url("apps", "smokeparrot"))
+   update_message("hide","hidden")
 end
 
 function sanitize_output(text)
