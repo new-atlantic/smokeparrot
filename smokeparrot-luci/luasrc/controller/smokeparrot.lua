@@ -118,6 +118,16 @@ function hide_message()
    luci.http.redirect(luci.dispatcher.build_url("apps", "smokeparrot"))
 end
 
+function sanitize_output(text)
+    local replacements = {
+        ['&' ] = '&amp;', 
+        ['<' ] = '&lt;', 
+        ['>' ] = '&gt;', 
+        ['\n'] = '<br/>'
+    }
+    return text:gsub('[&<>\n]', replacements)
+end
+
 function display_messages()
    local env = assert (luasql.sqlite3())
    local conn = assert (env:connect(db_file))
@@ -132,7 +142,7 @@ function display_messages()
 		       name = row.name,
 		       time = row.time,
 		       node = "",
-		       text = row.text,
+		       text = sanitize_output(row.text),
 		       starred = row.starred,
 		       own = row.own,
 		       shared = row.shared,
