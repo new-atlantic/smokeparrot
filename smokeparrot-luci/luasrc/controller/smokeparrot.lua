@@ -39,7 +39,7 @@ end
 
 function post_message()
    local message = luci.http.formvalue("sp_message-body")
-   if  message ~= "" then
+   if message:gsub("^%s*", "") ~= "" then
       local env = assert (luasql.sqlite3())
       local conn = assert (env:connect(db_file))
       math.randomseed (os.time())
