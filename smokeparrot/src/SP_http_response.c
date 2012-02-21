@@ -34,6 +34,7 @@
 #define SP_URI_SMOKEPARROT    "/smokeparrot"
 #define SP_URI_MESSAGES       "/smokeparrot/messages"
 #define SP_URI_MESSAGE "/smokeparrot/message"
+#define SP_URI_NEW_MESSAGE "/smokeparrot/message/new"
 
 // SP_MESSAGE_ID is a hex encoded sha256 hash.
 #define SP_MESSAGE_ID_LENGTH 64
@@ -106,7 +107,7 @@ int SP_request_callback (void *cls,
       else
 	return _SP_method_not_supported (connection, url, method);
     }
-  else if (! strcmp (url, SP_URI_MESSAGE))
+  else if (! strcmp (url, SP_URI_NEW_MESSAGE))
     {
       if (! strcmp (method, "POST"))
 	return _SP_post_new_message (connection, upload_data, upload_data_size);
