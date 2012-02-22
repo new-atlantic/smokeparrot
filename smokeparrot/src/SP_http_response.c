@@ -40,26 +40,26 @@
 #define SP_MESSAGE_ID_LENGTH 64
 
 
-static int _SP_resource_not_found (struct MHD_Connection *connection,
+static int resource_not_found (struct MHD_Connection *connection,
 				   const char *url);
 
-static int _SP_method_not_supported (struct MHD_Connection *connection,
+static int method_not_supported (struct MHD_Connection *connection,
 					      const char *url,
 					      const char *method);
 
-static int _SP_root_resource (struct MHD_Connection *connection);
+static int GET_root_resource (struct MHD_Connection *connection);
 
-static int _SP_smokeparrot_resource (struct MHD_Connection *connection);
+static int GET_smokeparrot_resource (struct MHD_Connection *connection);
 
-static int _SP_messages_resource (struct MHD_Connection *connection);
+static int GET_messages_resource (struct MHD_Connection *connection);
 
-static int _SP_message_resource (struct MHD_Connection *connection);
+static int GET_message_resource (struct MHD_Connection *connection);
 
-static int _SP_post_new_message (struct MHD_Connection *connection,
+static int POST_new_message (struct MHD_Connection *connection,
 				 const char *upload_data, 
 				 size_t *upload_data_size);
 
-static int _SP_post_message (struct MHD_Connection *connection,
+static int POST_message (struct MHD_Connection *connection,
 			     const char *url,
 			     const char *upload_data, 
 			     size_t *upload_data_size);
@@ -92,47 +92,47 @@ int SP_request_callback (void *cls,
   /* Create response based on request method and path */
 
   if (! strcmp (url, "/"))
-    return _SP_root_resource (connection);
+    return GET_root_resource (connection);
   else if (! strcmp (url, SP_URI_SMOKEPARROT))
     {
       if (! strcmp (method, "GET"))
-	return _SP_smokeparrot_resource (connection);
+	return GET_smokeparrot_resource (connection);
       else
-	return _SP_method_not_supported (connection, url, method);
+	return method_not_supported (connection, url, method);
     }
   else if (! strcmp (url, SP_URI_MESSAGES))
     {
       if (! strcmp (method, "GET"))
-	return _SP_messages_resource (connection);
+	return GET_messages_resource (connection);
       else
-	return _SP_method_not_supported (connection, url, method);
+	return method_not_supported (connection, url, method);
     }
   else if (! strcmp (url, SP_URI_NEW_MESSAGE))
     {
       if (! strcmp (method, "POST"))
-	return _SP_post_new_message (connection, upload_data, upload_data_size);
+	return POST_new_message (connection, upload_data, upload_data_size);
       else
-	return _SP_method_not_supported (connection, url, method);
+	return method_not_supported (connection, url, method);
     }
   else if (! strncmp (url, SP_URI_MESSAGE, strlen (SP_URI_MESSAGE)))
     {
       if (strlen (url) == strlen (SP_URI_MESSAGE) + SP_MESSAGE_ID_LENGTH + 1)
 	{
 	  if (! strcmp (method, "GET"))
-	    return _SP_message_resource (connection);
+	    return GET_message_resource (connection);
 	  else if (! strcmp (method, "POST"))
-	    return _SP_post_message (connection, url, upload_data, upload_data_size);
+	    return POST_message (connection, url, upload_data, upload_data_size);
 	  else
-	    return _SP_method_not_supported (connection, url, method);
+	    return method_not_supported (connection, url, method);
 	}
       else
-	return _SP_resource_not_found (connection, url);
+	return resource_not_found (connection, url);
     }
   else
-    return _SP_resource_not_found (connection, url);
+    return resource_not_found (connection, url);
 }
 
-static int _SP_resource_not_found (struct MHD_Connection *connection, const char *url)
+static int resource_not_found (struct MHD_Connection *connection, const char *url)
 {
   const char *data = "404: Resource not found.\n";
   // const char *data = url;
@@ -150,7 +150,7 @@ static int _SP_resource_not_found (struct MHD_Connection *connection, const char
   return queue_result;
 };
 
-static int _SP_method_not_supported (struct MHD_Connection *connection,
+static int method_not_supported (struct MHD_Connection *connection,
 					      const char *url,
 					      const char *method)
 {
@@ -171,7 +171,7 @@ static int _SP_method_not_supported (struct MHD_Connection *connection,
   return queue_result;
 };
 
-static int _SP_root_resource (struct MHD_Connection *connection)
+static int GET_root_resource (struct MHD_Connection *connection)
 {
   const char *data = "";
   struct MHD_Response *response;
@@ -188,7 +188,7 @@ static int _SP_root_resource (struct MHD_Connection *connection)
   return queue_result;
 };
 
-static int _SP_smokeparrot_resource (struct MHD_Connection *connection)
+static int GET_smokeparrot_resource (struct MHD_Connection *connection)
 {
   const char *data =				\
     "Program: Smokeparrot\n"			\
@@ -208,7 +208,7 @@ static int _SP_smokeparrot_resource (struct MHD_Connection *connection)
   return queue_result;
 };
 
-static int _SP_messages_resource (struct MHD_Connection *connection)
+static int GET_messages_resource (struct MHD_Connection *connection)
 {
   const char *data =				\
     "{\n"						\
@@ -228,7 +228,7 @@ static int _SP_messages_resource (struct MHD_Connection *connection)
   return queue_result;
 };
 
-static int _SP_message_resource (struct MHD_Connection *connection)
+static int GET_message_resource (struct MHD_Connection *connection)
 {
   const char *data =				\
     "{\n"						\
@@ -248,7 +248,7 @@ static int _SP_message_resource (struct MHD_Connection *connection)
   return queue_result;
 };
 
-static int _SP_post_new_message (struct MHD_Connection *connection,
+static int POST_new_message (struct MHD_Connection *connection,
 				 const char *upload_data, 
 				 size_t *upload_data_size)
 {
@@ -267,7 +267,7 @@ static int _SP_post_new_message (struct MHD_Connection *connection,
   return queue_result;
 };
 
-static int _SP_post_message (struct MHD_Connection *connection,
+static int POST_message (struct MHD_Connection *connection,
 			     const char *url,
 			     const char *upload_data, 
 			     size_t *upload_data_size)
