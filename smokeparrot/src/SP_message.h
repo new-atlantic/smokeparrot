@@ -19,6 +19,8 @@
 
 #include <stdint.h>
 
+// SP_MESSAGE_ID is a hex encoded sha256 hash.
+#define SP_MESSAGE_ID_LENGTH 64
 
 #define MESSAGE_MAX_UTF8_CHARS
 
