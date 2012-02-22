@@ -30,9 +30,6 @@
 
 #define SP_SERVER_PORT 1687
 
-/**
- * @brief The main program entry point.
- **/
 
 int main ()
 {

@@ -38,6 +38,8 @@
 #define SP_URI_NEW_MESSAGE "/smokeparrot/message/new"
 
 
+/* Function prototypes */
+
 static int resource_not_found (struct MHD_Connection *connection,
                                const char *url);
 
@@ -62,20 +64,7 @@ static int POST_message (struct MHD_Connection *connection,
                          const char *upload_data,
                          size_t *upload_data_size);
 
-/**
- * @brief Default callback for responding to HTTP requests
- *
- * @param *cls
- * @param *connection Handle to the HTTP connection / request
- * @param *url Request path
- * @param *method HTTP request method
- * @param *version HTTP version string
- * @param upload_data Data being uploaded
- * @param upload_data_size Size of the uploaded data
- * @param con_cls
- *
- * SP_request_callback parses the request and returns the appropriate response.
- */
+/* Function bodies */
 
 int SP_request_callback (void *cls,
                          struct MHD_Connection *connection,
@@ -86,7 +75,7 @@ int SP_request_callback (void *cls,
                          size_t *upload_data_size,
                          void **con_cls) 
 {
-  /* Create response based on request method and path */
+	/* Call handler based on request method and path */
 
 	if (! strcmp (url, "/")) {
 		return GET_root_resource (connection);
@@ -111,8 +100,8 @@ int SP_request_callback (void *cls,
 			return method_not_supported (connection, url, method);
 		}
 	} else if (! strncmp (url, SP_URI_MESSAGE, strlen (SP_URI_MESSAGE))) {
-		if (strlen (url) == strlen (SP_URI_MESSAGE)
-		                           + SP_MESSAGE_ID_LENGTH + 1) {
+		if (strlen (url) == strlen (SP_URI_MESSAGE + 1
+		                            + SP_MESSAGE_ID_LENGTH)) {
 			if (! strcmp (method, "GET")) {
 				return GET_message_resource (connection);
 			} else if (! strcmp (method, "POST")) {
