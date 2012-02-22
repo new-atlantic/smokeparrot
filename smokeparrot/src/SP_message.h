@@ -26,19 +26,20 @@
 
 
 struct SP_Message {
-  // identitfier_t id;
-  // address_t origin;
-  unsigned int length;;
-  char*        sender;
-  char*        text;
-  time_t       time_sent;
-  // sig_t signature;
-  unsigned int hops; // shortest path;
+	// identifier_t id;
+	// address_t    origin;
+	unsigned int length;
+	char*        sender;
+	char*        text;
+	time_t       time_sent;
+	// sig_t signature;
+	unsigned int hops; // shortest path;
 };
 
 struct SP_Message_Entry {
-  struct SP_Message message;
-  time_t            time_received; // time when the message was first received
-  unsigned int      n_times_received;
-  // address_t[]*   sender_list;
+	struct SP_Message message;
+	time_t            time_received; // time when message first received
+	unsigned int      n_times_received;
+	// address_t[]*      sender_list;
 };
+

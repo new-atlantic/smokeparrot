@@ -36,30 +36,32 @@
 
 int main ()
 {
-  struct MHD_Daemon *http_daemon;
+	struct MHD_Daemon *http_daemon;
 
-  /* TODO: Third argument needs callback to check if client is allowed to
-     connect. Check via MeshAware if is in range. Check via auth if allowed
-     to connect automatically. Fourth argument passes extra arguments to 3rd */
+	/* TODO: Third argument needs callback to check if client is allowed to
+	   connect. Check via MeshAware if is in range. Check via auth if allowed
+	   to connect automatically. Fourth argument passes extra arguments to 3rd */
 
-  /* TODO: Set options for number of connections, number of connections per IP,
-     and memory per connection */
+	/* TODO: Set options for number of connections, number of connections per IP,
+	   and memory per connection */
 
-  http_daemon = MHD_start_daemon (MHD_USE_SELECT_INTERNALLY |
-				  MHD_USE_DEBUG |
-				  MHD_USE_PEDANTIC_CHECKS,
-				  SP_SERVER_PORT,
-				  NULL,
-				  NULL, 
-				  &SP_request_callback,
-				  NULL,
-				  MHD_OPTION_END);
+	http_daemon = MHD_start_daemon (MHD_USE_SELECT_INTERNALLY |
+	                                MHD_USE_DEBUG |
+	                                MHD_USE_PEDANTIC_CHECKS,
+	                                SP_SERVER_PORT,
+	                                NULL,
+	                                NULL,
+	                                &SP_request_callback,
+	                                NULL,
+	                                MHD_OPTION_END);
 
-  if (http_daemon == NULL)
-    exit (EXIT_FAILURE);
+	if (http_daemon == NULL) {
+		exit (EXIT_FAILURE);
+	}
 
-  // TODO: become daemon
-  sleep (300);
-  MHD_stop_daemon (http_daemon);
-  exit (EXIT_SUCCESS);
+	// TODO: become daemon
+	sleep (300);
+	MHD_stop_daemon (http_daemon);
+	exit (EXIT_SUCCESS);
 }
+
