@@ -100,8 +100,8 @@ int SP_request_callback (void *cls,
 			return method_not_supported (connection, url, method);
 		}
 	} else if (! strncmp (url, SP_URI_MESSAGE, strlen (SP_URI_MESSAGE))) {
-		if (strlen (url) == strlen (SP_URI_MESSAGE + 1
-		                            + SP_MESSAGE_ID_LENGTH)) {
+		if (strlen (url) == (strlen (SP_URI_MESSAGE)
+		                            + 1 + SP_MESSAGE_ID_LENGTH)) {
 			if (! strcmp (method, "GET")) {
 				return GET_message_resource (connection);
 			} else if (! strcmp (method, "POST")) {
