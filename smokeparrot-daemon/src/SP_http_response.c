@@ -32,10 +32,10 @@
 
 
 // Resources served
-#define SP_URI_SMOKEPARROT "/smokeparrot"
-#define SP_URI_MESSAGES    "/smokeparrot/messages"
-#define SP_URI_MESSAGE     "/smokeparrot/message"
-#define SP_URI_NEW_MESSAGE "/smokeparrot/message/new"
+#define SP_URI_SMOKEPARROT    "/smokeparrot"
+#define SP_URI_MESSAGES       "/smokeparrot/messages"
+#define SP_URI_MESSAGE_PREFIX "/smokeparrot/message/"
+#define SP_URI_NEW_MESSAGE    "/smokeparrot/message/new"
 
 
 /* Function prototypes */
@@ -99,9 +99,11 @@ int SP_request_callback (void *cls,
 		} else {
 			return method_not_supported (connection, url, method);
 		}
-	} else if (! strncmp (url, SP_URI_MESSAGE, strlen (SP_URI_MESSAGE))) {
-		if (strlen (url) == (strlen (SP_URI_MESSAGE)
-		                            + 1 + SP_MESSAGE_ID_LENGTH)) {
+	} else if (! strncmp (url, SP_URI_MESSAGE_PREFIX,
+	                      strlen (SP_URI_MESSAGE_PREFIX))) {
+		if (strlen (url) == (strlen (SP_URI_MESSAGE_PREFIX)
+		                     + SP_MESSAGE_ID_LENGTH)) {
+			/* TODO: if-layer with function validate MESSAGE_ID */
 			if (! strcmp (method, "GET")) {
 				return GET_message_resource (connection);
 			} else if (! strcmp (method, "POST")) {
@@ -207,7 +209,7 @@ static int GET_smokeparrot_resource (struct MHD_Connection *connection)
 static int GET_messages_resource (struct MHD_Connection *connection)
 {
 	const char *data = "{\n"                      \
-	                   "\"SP_MessageList\": []\n"	\
+	                   "\"SP_MessageList\": []\n" \
 	                   "}\n";
 	struct MHD_Response *response;
 	int queue_result;
