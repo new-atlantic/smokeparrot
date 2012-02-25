@@ -135,9 +135,12 @@ static int resource_not_found (struct MHD_Connection *connection,
 	response = MHD_create_response_from_buffer (strlen (data),
 	                                            (void*) data,
 	                                            MHD_RESPMEM_PERSISTENT);
-	MHD_add_response_header (response,
-	                         MHD_HTTP_HEADER_CONTENT_TYPE,
-	                         "text/plain");
+	if (MHD_NO == MHD_add_response_header (response,
+	                                       MHD_HTTP_HEADER_CONTENT_TYPE,
+	                                       "text/plain")) {
+		/* TODO: handle error */;
+	};
+
 	queue_result = MHD_queue_response (connection, 
 	                                   MHD_HTTP_NOT_FOUND,
 	                                   response);
@@ -158,9 +161,12 @@ static int method_not_supported (struct MHD_Connection *connection,
 	response = MHD_create_response_from_buffer (strlen (data),
 	                                            (void*) data,
 	                                            MHD_RESPMEM_PERSISTENT);
-	MHD_add_response_header (response,
-	                         MHD_HTTP_HEADER_CONTENT_TYPE,
-	                         "text/plain");
+	if (MHD_NO == MHD_add_response_header (response,
+	                                       MHD_HTTP_HEADER_CONTENT_TYPE,
+	                                       "text/plain")) {
+		/* TODO: handle error */;
+	};
+
 	queue_result = MHD_queue_response (connection,
 	                                   MHD_HTTP_METHOD_NOT_ALLOWED,
 	                                   response);
@@ -177,9 +183,13 @@ static int GET_root_resource (struct MHD_Connection *connection)
 	response = MHD_create_response_from_buffer (strlen (data),
 	                                            (void*) data,
 	                                            MHD_RESPMEM_PERSISTENT);
-	MHD_add_response_header (response,
-	                         MHD_HTTP_HEADER_LOCATION,
-	                         "/smokeparrot");
+
+	if (MHD_NO == MHD_add_response_header (response,
+	                                       MHD_HTTP_HEADER_LOCATION,
+	                                       "/smokeparrot")) {
+		/* TODO: handle error */;
+	};
+
 	queue_result = MHD_queue_response (connection,
 	                                   MHD_HTTP_MOVED_PERMANENTLY,
 	                                   response);
@@ -198,9 +208,12 @@ static int GET_smokeparrot_resource (struct MHD_Connection *connection)
 	response = MHD_create_response_from_buffer (strlen (data),
 	                                            (void*) data,
 	                                            MHD_RESPMEM_PERSISTENT);
-	MHD_add_response_header (response,
-	                         MHD_HTTP_HEADER_CONTENT_TYPE,
-	                         "text/plain");
+	if (MHD_NO == MHD_add_response_header (response,
+	                                       MHD_HTTP_HEADER_CONTENT_TYPE,
+	                                       "text/plain")) {
+		/* TODO: handle error */;
+	};
+
 	queue_result = MHD_queue_response (connection, MHD_HTTP_OK, response);
 	MHD_destroy_response (response);
 	return queue_result;
@@ -217,9 +230,12 @@ static int GET_messages_resource (struct MHD_Connection *connection)
 	response = MHD_create_response_from_buffer (strlen (data),
 	                                            (void*) data,
 	                                            MHD_RESPMEM_PERSISTENT);
-	MHD_add_response_header (response,
-	                         MHD_HTTP_HEADER_CONTENT_TYPE,
-	                         "application/json");
+	if (MHD_NO == MHD_add_response_header (response,
+	                                       MHD_HTTP_HEADER_CONTENT_TYPE,
+	                                       "application/json")) {
+		/* TODO: handle error */;
+	};
+
 	queue_result = MHD_queue_response (connection, MHD_HTTP_OK, response);
 	MHD_destroy_response (response);
 	return queue_result;
@@ -236,9 +252,12 @@ static int GET_message_resource (struct MHD_Connection *connection)
 	response = MHD_create_response_from_buffer (strlen (data),
 	                                            (void*) data,
 	                                            MHD_RESPMEM_PERSISTENT);
-	MHD_add_response_header (response,
-	                         MHD_HTTP_HEADER_CONTENT_TYPE,
-	                         "application/json");
+	if (MHD_NO == MHD_add_response_header (response,
+	                                       MHD_HTTP_HEADER_CONTENT_TYPE,
+	                                       "application/json")) {
+		/* TODO: handle error */;
+	};
+
 	queue_result = MHD_queue_response (connection, MHD_HTTP_OK, response);
 	MHD_destroy_response (response);
 	return queue_result;
@@ -255,9 +274,12 @@ static int POST_new_message (struct MHD_Connection *connection,
 	response = MHD_create_response_from_buffer (strlen (data),
 	                                            (void*) data,
 	                                            MHD_RESPMEM_PERSISTENT);
-	MHD_add_response_header (response,
-	                         MHD_HTTP_HEADER_CONTENT_TYPE,
-	                         "text/plain");
+	if (MHD_NO == MHD_add_response_header (response,
+	                                       MHD_HTTP_HEADER_CONTENT_TYPE,
+	                                       "text/plain")) {
+		/* TODO: handle error */;
+	};
+
 	queue_result = MHD_queue_response (connection, MHD_HTTP_OK, response);
 	MHD_destroy_response (response);
 	return queue_result;
@@ -275,9 +297,12 @@ static int POST_message (struct MHD_Connection *connection,
 	response = MHD_create_response_from_buffer (strlen (data),
 	                                            (void*) data,
 	                                            MHD_RESPMEM_PERSISTENT);
-	MHD_add_response_header (response,
-	                         MHD_HTTP_HEADER_CONTENT_TYPE,
-	                         "text/plain");
+	if (MHD_NO == MHD_add_response_header (response,
+	                                       MHD_HTTP_HEADER_CONTENT_TYPE,
+	                                       "text/plain")) {
+		/* TODO: handle error */;
+	};
+
 	queue_result = MHD_queue_response (connection, MHD_HTTP_OK, response);
 	MHD_destroy_response (response);
 	return queue_result;
