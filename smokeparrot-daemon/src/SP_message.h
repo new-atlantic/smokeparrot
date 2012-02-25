@@ -17,6 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef SP_MESSAGE_H
+#define SP_MESSAGE_H
+
+
 #include <stdint.h>
 
 // SP_MESSAGE_ID is exported as a hex encoded sha256 hash.
@@ -42,4 +46,6 @@ struct SP_Message_Entry {
 	unsigned int      n_times_received;
 	// address_t[]*      sender_list;
 };
+
+#endif
 

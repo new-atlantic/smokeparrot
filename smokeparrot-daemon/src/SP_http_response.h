@@ -17,6 +17,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#ifndef SP_HTTP_RESPONSE_H
+#define SP_HTTP_RESPONSE_H
+
+
 /**
  * @brief Default callback for responding to HTTP requests
  *
@@ -37,4 +41,6 @@ int SP_request_callback (void *cls, struct MHD_Connection *connection,
                          const char *method, const char *version,
                          const char *upload_data,
                          size_t *upload_data_size, void **con_cls);
+
+#endif
 
