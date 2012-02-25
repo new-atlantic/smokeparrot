@@ -20,7 +20,7 @@
 #include <stdint.h>
 
 // SP_MESSAGE_ID is exported as a hex encoded sha256 hash.
-#define SP_MESSAGE_ID_LENGTH 64
+#define SP_MESSAGE_ID_LENGTH 64u
 
 #define MESSAGE_MAX_UTF8_CHARS
 
