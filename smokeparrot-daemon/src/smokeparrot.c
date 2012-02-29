@@ -52,7 +52,9 @@ int main ()
 	                                NULL,
 	                                MHD_OPTION_END);
 
-	if (http_daemon == NULL) {
+	if (http_daemon)  {
+		;
+	} else {
 		exit (EXIT_FAILURE);
 	}
 
