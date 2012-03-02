@@ -1,7 +1,7 @@
 PROGRAM = smokeparrot
 CC = gcc
 
-WARNINGS = -Wall -Wformat -Wformat-security -Werror=format-security
+WARNINGS = -Wall -Wextra -Wformat -Wformat-security -Werror=format-security
 HARDENING = -fstack-protector -D_FORTIFY_SOURCE=2 -pie -fPIE --param ssp-buffer-size=4 
 DEFS = --std=c99 -pthread -D_REENTRANT -O1
 FTM = -D_GNU_SOURCE
